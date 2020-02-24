@@ -1,11 +1,11 @@
 ---
-title:          Modern Web Development 101
-date:           2015-02-08T08:15:01Z
+title: Modern Web Development 101
+date: 2015-02-08T08:15:01Z
 tags:
-    - Web
-    - Build
-    - Javascript
-    - Web Applications
+  - Web
+  - Build
+  - Javascript
+  - Web Applications
 ---
 
 Maybe you've heard the term "Modern Web" before. It embodies the idea of a constantly evolving, exciting platform that unique and powerful user experiences can be built upon. It is a platform that new capabilities are added to regularly, not waiting for long release cycles.

@@ -1,11 +1,11 @@
 ---
-title:          Yes, I Used jQuery in my Angular2 Application
-date:           2016-04-25T00:16:57.496Z
+title: Yes, I Used jQuery in my Angular2 Application
+date: 2016-04-25T00:16:57.496Z
 tags:
-    - Angular2
-    - jQuery
-    - Widgets
-    - Components
+  - Angular2
+  - jQuery
+  - Widgets
+  - Components
 ---
 
 An astute observer has probably noticed that I’m using [jQuery](https://jquery.com/) in my
@@ -24,7 +24,7 @@ Plus it weights your application down with additional dependencies that will cau
 to load more slowly for a user.
 
 But using jQuery was practical for this situation and gives me the chance to demonstrate how Angular2
-can interoperate with existing web technologies.  Let’s take a step back and look why jQuery
+can interoperate with existing web technologies. Let’s take a step back and look why jQuery
 might be worth considering in certain scenarios.
 
 ## User Interface Widgets
@@ -44,7 +44,7 @@ Most of the Angular applications that I’ve written have had the need for some 
 components. I certainly could have addressed this by writing new components using Angular’s directive
 syntax, but the goal of my projects has always been to create something
 of value to the business, not to create user interface components. So it did not make sense for
-me to recreate the wheel when existing components were available.  And most of the time, these
+me to recreate the wheel when existing components were available. And most of the time, these
 components were jQuery-based.
 
 Fortunately, Angular has always had ways to interact with other components and has
@@ -67,7 +67,7 @@ or planned.
 - [Bootstrap 3/4](https://github.com/valor-software/ng2-bootstrap)
 - [PrimeNG](https://github.com/primefaces/primeng)
 - [Zurb Foundation](https://twitter.com/zurbfoundation/status/656927894401212416) _(a
-    tweet saying that they have plans for Angular2, but nothing concrete yet)_
+  tweet saying that they have plans for Angular2, but nothing concrete yet)_
 - [Kendo UI](http://www.telerik.com/blogs/kendo-ui-and-the-road-to-angular-2)
 - [Semantic UI](https://github.com/vladotesanovic/ngSemantic)
 
@@ -76,7 +76,7 @@ or planned.
 In the [example application](https://github.com/ng-cookbook/angular2-redux-complex-ui),
 I'm using a couple of widgets, a menu bar and
 an auto-complete (type-ahead) component, which are implemented in the
-[Semantic UI](http://semantic-ui.com/) library.  Semantic UI is a collection
+[Semantic UI](http://semantic-ui.com/) library. Semantic UI is a collection
 of components that bills itself as "a development framework that helps create beautiful,
 responsive layouts using human-friendly HTML." Currently Semantic UI has a dependency on
 jQuery.
@@ -86,7 +86,7 @@ jQuery.
 User interface widgets usually have either a global or explicit initialization. For global
 initialization, once the page loads, markers are found in the page that identify elements
 that should be initialized (for example, a class named `menu` might
-initialize an application menu component).  Explicit initialization requires JavaScript
+initialize an application menu component). Explicit initialization requires JavaScript
 to explicitly initialize a specific element as a component. The latter is the type of
 initialization that an Angular2 application will do. Page content is loaded dynamically
 and the appropriate markup won't be available for any global initialization to find.
@@ -94,7 +94,7 @@ and the appropriate markup won't be available for any global initialization to f
 ## Menu Widget
 
 In Angular2, we create an [attribute directive](https://angular.io/docs/ts/latest/guide/attribute-directives.html)
-to perform the explicit initialization of the menu widget.  Angular2 directives have
+to perform the explicit initialization of the menu widget. Angular2 directives have
 [life-cycle hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html)
 that can help us, specifically we will use the `ngOnInit` and `ngOnDestroy` hooks.
 
@@ -125,29 +125,29 @@ export class InitializeDropdown implements OnInit, OnDestroy {
 
 The directive we've created allows us to use jQuery in this way because we've also injected
 the native DOM element into the directive (accessed through the `nativeElement` property of
-the `ElementRef` dependency).  Be mindful, however, that this technique is considered to
-be a "last resort".  Don't use the `nativeElement` property unless you need direct access to the
+the `ElementRef` dependency). Be mindful, however, that this technique is considered to
+be a "last resort". Don't use the `nativeElement` property unless you need direct access to the
 DOM (as we do in this case).
 
 Note also that the selector for this directive, `.ui.dropdown`, is the same as the class names that
-Semantic UI is using for the menu component itself.  So we didn't have to create a new attribute
+Semantic UI is using for the menu component itself. So we didn't have to create a new attribute
 property to associate this directive with an element and we don't have to change the markup.
 
 ```html
 <div class="ui dropdown item">
-    Views
-    <i class="dropdown icon"></i>
-    <div class="menu">
-        <div class="item">
-            <a [routerLink]="['/Images', 'List']">Image List</a>
-        </div>
-        <div class="item">
-            <a [routerLink]="['/Images', 'Groups']">Image Groups</a>
-        </div>
-        <div class="item">
-            <a [routerLink]="['/Images', 'Edit', {id: null}]">Image Edit</a>
-        </div>
+  Views
+  <i class="dropdown icon"></i>
+  <div class="menu">
+    <div class="item">
+      <a [routerLink]="['/Images', 'List']">Image List</a>
     </div>
+    <div class="item">
+      <a [routerLink]="['/Images', 'Groups']">Image Groups</a>
+    </div>
+    <div class="item">
+      <a [routerLink]="['/Images', 'Edit', {id: null}]">Image Edit</a>
+    </div>
+  </div>
 </div>
 ```
 
@@ -174,14 +174,14 @@ additional configuration and the directive will take an input parameter and emit
 an event.
 
 This directive wraps the underlying Sematic UI component, so we have the
-ability to present the component to the overall application in a way that makes sense.  It
+ability to present the component to the overall application in a way that makes sense. It
 can easily expose all of the functionality of the underlying widget, but it could
 also present a constrained API, more specific to the needs of the application itself.
 It's good to consider the API that will be presented, especially in applications
 with a lot of shared user interface components. We can present a component that only
 exposes the things that a developer should change, rather than exposing the entire API
 for the underlying widget. This makes for components that are easier to reuse and
-helps ensure that the user interface is consistent.  This applies to jQuery-based
+helps ensure that the user interface is consistent. This applies to jQuery-based
 widgets (as in this example), but it could also be applied to more general-purpose
 widgets implemented in Angular as well.
 
@@ -256,7 +256,7 @@ export class AddTagOnEnter {
 ```
 
 We can also use Angular’s dependency injection system to inject the `tagSelectorInput`
-directive into this directive.  This works because the `tagSelectorInput` directive
+directive into this directive. This works because the `tagSelectorInput` directive
 is a parent of the `AddTagOnEnter` directive.
 
 ```javascript

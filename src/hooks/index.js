@@ -1,1 +1,1 @@
-export { useSiteMetadata } from "./useSiteMetadata"
+export { useSiteMetadata } from "./useSiteMetadata";

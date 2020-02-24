@@ -1,10 +1,10 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { Link } from "gatsby"
-import "./postExcerpt.css"
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "gatsby";
+import "./postExcerpt.css";
 
 function PostExcerpt({ excerpt, title, slug, date }) {
-  const link = `/posts/${slug}`
+  const link = `/posts/${slug}`;
   return (
     <section className="post-excerpt">
       <h3>
@@ -13,7 +13,7 @@ function PostExcerpt({ excerpt, title, slug, date }) {
       <div>{date}</div>
       <div>{excerpt}</div>
     </section>
-  )
+  );
 }
 
 PostExcerpt.propTypes = {
@@ -21,6 +21,6 @@ PostExcerpt.propTypes = {
   title: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-}
+};
 
-export default PostExcerpt
+export default PostExcerpt;

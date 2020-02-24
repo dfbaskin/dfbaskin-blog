@@ -1,11 +1,11 @@
-import React from "react"
+import React from "react";
 
-import TwitterLink from "./twitterLink"
-import GitHubLink from "./githubLink"
-import MeLink from "./meLink"
+import TwitterLink from "./twitterLink";
+import GitHubLink from "./githubLink";
+import MeLink from "./meLink";
 
 const Footer = ({ children }) => {
-  const year = new Date().getFullYear()
+  const year = new Date().getFullYear();
 
   return (
     <footer>
@@ -16,7 +16,7 @@ const Footer = ({ children }) => {
         <MeLink />
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

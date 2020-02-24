@@ -1,16 +1,16 @@
 ---
-title:          Angular2 UrlResolver for Component Assets
-date:           2016-06-15T23:34:32.198Z
+title: Angular2 UrlResolver for Component Assets
+date: 2016-06-15T23:34:32.198Z
 tags:
-    - Angular2
-    - UrlResolver
+  - Angular2
+  - UrlResolver
 ---
 
 [Thoughtram](http://thoughtram.io/) published a piece about
 [Component Relative Paths in Angular2](http://blog.thoughtram.io/angular/2016/06/08/component-relative-paths-in-angular-2.html).
 This is great! It makes working with components much easier.
 
-However, I wasn't sure about other component-specific assets, like images for example.  So I asked about it:
+However, I wasn't sure about other component-specific assets, like images for example. So I asked about it:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/dfbaskin">@dfbaskin</a> That&#39;s a good point! There&#39;s no isolated solution for that yet</p>&mdash; Pascal Precht ʕ•̫͡•ʔ (@PascalPrecht) <a href="https://twitter.com/PascalPrecht/status/743086388460068864">June 15, 2016</a></blockquote>
 
@@ -45,7 +45,7 @@ export class TitlePageComponent {
 In the view, just bind an image element to the `resolvePath` function.
 
 ```html
-<img [src]="resolvePath('angular.svg')">
+<img [src]="resolvePath('angular.svg')" />
 ```
 
 As the Thoughtram article mentioned, this solution is tied to using the CommonJS format for modules.

@@ -1,9 +1,9 @@
-import React from "react"
-import { Link } from "gatsby"
-import { useSiteMetadata } from "../hooks"
+import React from "react";
+import { Link } from "gatsby";
+import { useSiteMetadata } from "../hooks";
 
 const Header = () => {
-  const { title } = useSiteMetadata()
+  const { title } = useSiteMetadata();
   return (
     <header>
       <div>
@@ -12,7 +12,7 @@ const Header = () => {
         </h1>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

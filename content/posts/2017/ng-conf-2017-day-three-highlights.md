@@ -1,9 +1,9 @@
 ---
-title:          NG-CONF 2017 Day Three Highlights
-date:           2017-04-11T14:34:46.232Z
+title: NG-CONF 2017 Day Three Highlights
+date: 2017-04-11T14:34:46.232Z
 tags:
-    - ng-conf
-    - Angular
+  - ng-conf
+  - Angular
 ---
 
 ## Keynote
@@ -63,8 +63,8 @@ Universal and brought in under the main core framework as the
 [platform-server](https://github.com/angular/angular/tree/master/packages/platform-server)
 package. Functionality has been added to support these scenarios,
 allowing the construction of the page server-side, rendering to more
-complete HTML before being delivered to the browser. (*More details
-below.*)
+complete HTML before being delivered to the browser. (_More details
+below._)
 
 ## Upgrade Story
 
@@ -151,26 +151,26 @@ that may not be used by the consumer of the library.
 
 ## Other Highlights
 
--   The [Angular Language
-    Service](https://github.com/angular/vscode-ng-language-service) can
-    be used in our code editors to help with code completion, errors,
-    and references between components and templates. This service is
-    available in Visual Studio Code and WebStorm and will be available
-    for other editors soon.
+- The [Angular Language
+  Service](https://github.com/angular/vscode-ng-language-service) can
+  be used in our code editors to help with code completion, errors,
+  and references between components and templates. This service is
+  available in Visual Studio Code and WebStorm and will be available
+  for other editors soon.
 
--   If you’ve used the [Redux](http://redux.js.org/) library in your
-    application, you have probably also used selectors from the
-    [Reselect](http://redux.js.org/docs/recipes/ComputingDerivedData.html)
-    library. [Kara Erickson](https://twitter.com/karaforthewin)
-    demonstrated using selectors for form validations when building
-    [reactive
-    forms](https://angular.io/docs/ts/latest/guide/reactive-forms.html).
-    But she also talked about how reactive forms will be moving towards
-    using [observable
-    streams](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754) for
-    validations rather than the current implementation. This gives
-    complete control over form validation, including debouncing frequent
-    field changes, prioritizing asynchronous validations, and presenting
-    errors less frequently. It also allows for push validations, i.e.
-    validations that come from the server (for example, the highest bid
-    for a product has changed and a current bid is no longer valid).
+- If you’ve used the [Redux](http://redux.js.org/) library in your
+  application, you have probably also used selectors from the
+  [Reselect](http://redux.js.org/docs/recipes/ComputingDerivedData.html)
+  library. [Kara Erickson](https://twitter.com/karaforthewin)
+  demonstrated using selectors for form validations when building
+  [reactive
+  forms](https://angular.io/docs/ts/latest/guide/reactive-forms.html).
+  But she also talked about how reactive forms will be moving towards
+  using [observable
+  streams](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754) for
+  validations rather than the current implementation. This gives
+  complete control over form validation, including debouncing frequent
+  field changes, prioritizing asynchronous validations, and presenting
+  errors less frequently. It also allows for push validations, i.e.
+  validations that come from the server (for example, the highest bid
+  for a product has changed and a current bid is no longer valid).

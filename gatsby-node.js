@@ -4,26 +4,26 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-const path = require("path")
-const slugify = require('slugify');
+const path = require("path");
+const slugify = require("slugify");
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
-    const { createNodeField } = actions
-    if (node.internal.type === "Mdx") {
-        const slug = slugify(node.frontmatter.title, {
-            lower: true
-        });
-        createNodeField({
-            name: "slug",
-            node,
-            value: slug,
-        });
-    }
-}
+  const { createNodeField } = actions;
+  if (node.internal.type === "Mdx") {
+    const slug = slugify(node.frontmatter.title, {
+      lower: true,
+    });
+    createNodeField({
+      name: "slug",
+      node,
+      value: slug,
+    });
+  }
+};
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
-    const { createPage } = actions
-    const result = await graphql(`
+  const { createPage } = actions;
+  const result = await graphql(`
     query {
       allMdx {
         edges {
@@ -37,16 +37,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   `);
-    if (result.errors) {
-        reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query');
-    }
+  if (result.errors) {
+    reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query');
+  }
 
-    const posts = result.data.allMdx.edges
-    posts.forEach(({ node }, index) => {
-        createPage({
-            path: `/posts/${node.fields.slug}`,
-            component: path.resolve(`./src/components/posts.js`),
-            context: { id: node.id },
-        });
+  const posts = result.data.allMdx.edges;
+  posts.forEach(({ node }, index) => {
+    createPage({
+      path: `/posts/${node.fields.slug}`,
+      component: path.resolve(`./src/components/posts.js`),
+      context: { id: node.id },
     });
-}
+  });
+};

@@ -1,7 +1,7 @@
-import React from "react"
-import { graphql } from "gatsby"
-import { MDXRenderer } from "gatsby-plugin-mdx"
-import SEO from "./seo"
+import React from "react";
+import { graphql } from "gatsby";
+import { MDXRenderer } from "gatsby-plugin-mdx";
+import SEO from "./seo";
 import Layout from "./layout";
 
 export default function PageTemplate({ data: { mdx } }) {
@@ -15,7 +15,7 @@ export default function PageTemplate({ data: { mdx } }) {
         <MDXRenderer>{mdx.body}</MDXRenderer>
       </article>
     </Layout>
-  )
+  );
 }
 
 export const pageQuery = graphql`
@@ -28,4 +28,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;

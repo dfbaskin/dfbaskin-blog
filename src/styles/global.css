@@ -6,63 +6,62 @@ body {
 }
 
 .default-width {
-    @apply max-w-sm mx-auto my-16;
-    @screen sm {
-        @apply max-w-md;
-    }
+  @apply max-w-sm mx-auto my-16;
+  @screen sm {
+    @apply max-w-md;
+  }
 
-    @screen md {
-        @apply max-w-lg;
-    }
+  @screen md {
+    @apply max-w-lg;
+  }
 
-    @screen lg {
-        @apply max-w-xl;
-    }
+  @screen lg {
+    @apply max-w-xl;
+  }
 
-    @screen xl {
-        @apply max-w-4xl;
-    }
+  @screen xl {
+    @apply max-w-4xl;
+  }
 }
 
 .markdown {
-    @apply default-width;
-    h1 {
-        @apply text-2xl font-semibold;
+  @apply default-width;
+  h1 {
+    @apply text-2xl font-semibold;
+  }
+  h2 {
+    @apply text-lg mt-8 font-semibold;
+  }
+  p {
+    @apply leading-snug mt-4;
+  }
+  ul {
+    @apply mt-4;
+    li {
+      @apply ml-10 list-disc;
     }
-    h2 {
-        @apply text-lg mt-8 font-semibold;
-    }
-    p {
-        @apply leading-snug mt-4;
-    }
-    ul {
-        @apply mt-4;
-        li {
-            @apply ml-10 list-disc;
-        }
-    }
-    pre {
-        @apply overflow-auto pt-6 px-4 pb-0;
-    }
+  }
+  pre {
+    @apply overflow-auto pt-6 px-4 pb-0;
+  }
 }
 
 footer {
-    @apply default-width border-t border-gray-300 pt-2 flex;
-    > div:nth-of-type(1) {
-        @apply flex-auto;
-    }
-    > div:nth-of-type(2) {
-        @apply flex-none;
-    }
+  @apply default-width border-t border-gray-300 pt-2 flex;
+  > div:nth-of-type(1) {
+    @apply flex-auto;
+  }
+  > div:nth-of-type(2) {
+    @apply flex-none;
+  }
 
-    .icon-link {
-        @apply inline-block ml-2;
-        > svg {
-            width: 1.6rem;
-            height: 1.6rem;
-        }
+  .icon-link {
+    @apply inline-block ml-2;
+    > svg {
+      width: 1.6rem;
+      height: 1.6rem;
     }
+  }
 }
-
 
 @tailwind utilities;

@@ -1,11 +1,11 @@
-import React from "react"
-import { useSiteMetadata } from "../hooks"
+import React from "react";
+import { useSiteMetadata } from "../hooks";
 
 const TwitterLink = () => {
   const {
     social: { twitter },
-  } = useSiteMetadata()
-  const link = `https://twitter.com/${twitter}`
+  } = useSiteMetadata();
+  const link = `https://twitter.com/${twitter}`;
   return (
     <a href={link} className="icon-link">
       <svg role="img" viewBox="0 0 24 24">
@@ -16,7 +16,7 @@ const TwitterLink = () => {
         />
       </svg>
     </a>
-  )
-}
+  );
+};
 
-export default TwitterLink
+export default TwitterLink;

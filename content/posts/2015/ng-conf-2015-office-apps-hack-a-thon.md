@@ -1,10 +1,10 @@
 ---
-title:          ng-conf 2015 - Office Apps Hack-a-thon
-date:           2015-03-05T07:30:31Z
+title: ng-conf 2015 - Office Apps Hack-a-thon
+date: 2015-03-05T07:30:31Z
 tags:
-    - Angular JS
-    - Microsoft Office
-    - Web Applications
+  - Angular JS
+  - Microsoft Office
+  - Web Applications
 ---
 
 The night before ng-conf 2015 started, there were a number of lightning talks and hack-night activities. You
@@ -19,11 +19,11 @@ into Excel, Outlook, and others. (There is more detailed information at the
 
 Our task was to take one of [Andrew Connell's](http://www.andrewconnell.com/About) starter projects:
 
-* [https://github.com/andrewconnell/ngconf15-hackathon-outlook](https://github.com/andrewconnell/ngconf15-hackathon-outlook) -
-which looks up names found in Outlook messages for matching customers.
+- [https://github.com/andrewconnell/ngconf15-hackathon-outlook](https://github.com/andrewconnell/ngconf15-hackathon-outlook) -
+  which looks up names found in Outlook messages for matching customers.
 
-* [https://github.com/andrewconnell/ngconf15-hackathon-excel](https://github.com/andrewconnell/ngconf15-hackathon-excel) -
-which adds products to an Excel spreadsheet to generate invoices.
+- [https://github.com/andrewconnell/ngconf15-hackathon-excel](https://github.com/andrewconnell/ngconf15-hackathon-excel) -
+  which adds products to an Excel spreadsheet to generate invoices.
 
 And create our own project that demonstrates some interesting add-on functionality to one of these office apps.
 

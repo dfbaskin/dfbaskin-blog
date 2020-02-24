@@ -1,9 +1,9 @@
 ---
-title:          Container and Presentation Components in Angular2
-date:           2016-04-18T11:10:09Z
+title: Container and Presentation Components in Angular2
+date: 2016-04-18T11:10:09Z
 tags:
-    - Angular2
-    - Components
+  - Angular2
+  - Components
 ---
 
 [Angular2](https://angular.io/) has a strong emphasis on components. An application is made up
@@ -15,7 +15,7 @@ your application's functionality and how it is presented to the user.
 Components can be further categorized. Some components are just simple user interface
 components, for example like a date-picker widget or a simple user information card.
 These components are used throughout your application, but they don't exercise
-your application logic.  That work is delegated to other parts of the application.
+your application logic. That work is delegated to other parts of the application.
 These components might be called "Presentation" (or "Dumb") components.
 
 Other components serve to organize and orchestrate the activities of child components and
@@ -41,22 +41,22 @@ column header allows the user to select a subset of images to be displayed based
 tags they have been assigned.
 
 Now you could certainly implement all of this functionality as a single component. But you would find
-that the component becomes too "heavy"; it's trying to do too many things.  For the example, I broke
+that the component becomes too "heavy"; it's trying to do too many things. For the example, I broke
 down this functionality into the following components:
 
 - [ImageDetailList](https://github.com/ng-cookbook/angular2-redux-complex-ui/blob/master/src/app/components/image-detail-list/image-detail-list.ts) -
-    the images list component (the main parent component).
+  the images list component (the main parent component).
 - [ImageDetailTable](https://github.com/ng-cookbook/angular2-redux-complex-ui/blob/master/src/app/components/image-detail-list/image-detail-table.ts) -
-    the table itself.
+  the table itself.
 - [ImageDetailRow](https://github.com/ng-cookbook/angular2-redux-complex-ui/blob/master/src/app/components/image-detail-list/image-detail-row.ts) -
-    a row within the table.
+  a row within the table.
 - [SortableColumnHeader](https://github.com/ng-cookbook/angular2-redux-complex-ui/blob/master/src/app/components/image-detail-list/sortable-column-header.ts) -
-    a sortable table column header.
+  a sortable table column header.
 - [ImageTagSelector](https://github.com/ng-cookbook/angular2-redux-complex-ui/blob/master/src/app/components/image-detail-list/image-tag-selector.ts) -
-    the image tag selector
+  the image tag selector
 
 I'll get into the mechanics of using Redux to manage application state in future post, but of the components
-above, only two of them work directly with the application state.  The `ImageDetailList` component
+above, only two of them work directly with the application state. The `ImageDetailList` component
 needs the collection of images and the `ImageTagSelector` needs the collection of all tags associated
 with the images. The remaining components have data passed into them (through `Input` parameters) and
 tell the parent component that some event has happened (thought `Output` event emitters).
@@ -81,7 +81,7 @@ This component is included within the application using HTML markup.
 ```
 
 Using this markup by itself, however, is not sufficient to instantiate the component and include it in the page
-rendering.  Any component that includes this component needs to know about it. This is done using
+rendering. Any component that includes this component needs to know about it. This is done using
 the `directives` property on the `@Component` annotation.
 
 ```javascript
@@ -96,43 +96,43 @@ import {ImageDetailList} from '../../image-detail-list/image-detail-list'
 Adding the import and component class to the parent definition notifies Angular that the component
 will be included.
 
-*(This will probably be a very common issue that developers using Angular2 will encounter.
+_(This will probably be a very common issue that developers using Angular2 will encounter.
 "Why is my component not showing up?", "Did you include it the component definition?",
-"Arrghh!!", Smacks forehead.)*
+"Arrghh!!", Smacks forehead.)_
 
 This `ImageDetailList` component uses the `ImageDetailTable` component as a child component, which is
 declared using HTML markup.
 
 ```html
 <image-detail-table
-    [tableData]="imageList"
-    [sortBy]="sortBy"
-    [isAscending]="isAscending"
-    (toggleTitleSort)="sortByTitle()"
-    (toggleSizeSort)="sortBySize()"
-    (toggleDateSort)="sortByDate()"
-    ></image-detail-table>
+  [tableData]="imageList"
+  [sortBy]="sortBy"
+  [isAscending]="isAscending"
+  (toggleTitleSort)="sortByTitle()"
+  (toggleSizeSort)="sortBySize()"
+  (toggleDateSort)="sortByDate()"
+></image-detail-table>
 ```
 
 This may be like no HTML markup you've ever seen, but it is valid markup. The documentation
 for this [template syntax](https://angular.io/docs/ts/latest/guide/template-syntax.html) will help to
-better understand this.  Ultimately, however, what is going on here is that the child component,
+better understand this. Ultimately, however, what is going on here is that the child component,
 `ImageDetailTable`, exposes an API that the parent component, `ImageDetailList`, is using. It is
 binding its own data to API properties of the child component and responding with its own
 methods when events occur on the child component.
 
-This is a great feature of Angular2.  It makes the interface to your components much more explicit,
+This is a great feature of Angular2. It makes the interface to your components much more explicit,
 and much easier to use.
 
-Note also that the child component is a custom component that we've created.  But this same API interface
-applies to regular HTML markup elements as well.  Elements have properties and expose events
+Note also that the child component is a custom component that we've created. But this same API interface
+applies to regular HTML markup elements as well. Elements have properties and expose events
 and our Angular2 components work with them exactly as they do with custom components. In other
 words there is a very consistent interface for working with the elements within your web page,
 regardless what type they are, native element, custom components, or web components.
 
 ## ImageDetailTable - Image List Table Component
 
-So how does the API that `ImageDetailTable` exposes actually work?  The component requires some
+So how does the API that `ImageDetailTable` exposes actually work? The component requires some
 inputs, specifically:
 
 - the list of images
@@ -144,10 +144,10 @@ to sort by a particular column in the table.
 
 So another way to think about this is that everything that the `ImageDetailTable` needs
 is passed to it through inputs, and everything that it does passes back out as outputs. It really
-knows about nothing else.  This also makes it a presentation (or "dumb") component.
+knows about nothing else. This also makes it a presentation (or "dumb") component.
 
 The `ImageDetailList` component passes the data to the `ImageDetailTable` component through
-input bindings.  It also registers a callback method for each of the emitted events
+input bindings. It also registers a callback method for each of the emitted events
 through output bindings. These are defined in the component using:
 
 ```javascript
@@ -160,11 +160,11 @@ through output bindings. These are defined in the component using:
 ```
 
 These declare properties on the component class that can be used as bindings for a
-parent component.  This also makes it clear what the component expects as input
+parent component. This also makes it clear what the component expects as input
 and what it emits as output, i.e., the component's API.
 
 The component can then use these properties just like other
-properties on the class.  For example, the `tableData` property is used to
+properties on the class. For example, the `tableData` property is used to
 render each row of the table.
 
 ```javascript
@@ -179,7 +179,7 @@ For events, let's look at the column headers.
 
 The `SortableColumnHeader` component is used in a column header to provide user interface
 for sorting the column in ascending or descending order. It's a general component and really
-knows nothing about what it is sorting.  It's just a button along with an indicator that the
+knows nothing about what it is sorting. It's just a button along with an indicator that the
 column is being sorted.
 
 The markup for this component uses the sort state to indicate what icon should be displayed. It also
@@ -188,16 +188,16 @@ displayed.
 
 ```html
 <div (click)="onHeaderClicked($event)" style="cursor: pointer;">
-    <span *ngIf="sortIndicator < 0"><i class="fa fa-sort-desc"></i></span>
-    <span *ngIf="sortIndicator > 0"><i class="fa fa-sort-asc"></i></span>
-    <span *ngIf="sortIndicator === 0"><i class="fa fa-sort"></i></span>
-    <ng-content></ng-content>
+  <span *ngIf="sortIndicator < 0"><i class="fa fa-sort-desc"></i></span>
+  <span *ngIf="sortIndicator > 0"><i class="fa fa-sort-asc"></i></span>
+  <span *ngIf="sortIndicator === 0"><i class="fa fa-sort"></i></span>
+  <ng-content></ng-content>
 </div>
 ```
 
 The markup also uses event binding to specify a method that should be called when the user
-clicks on the sort icon. *(Note that the above technique is not very
-[accessible-friendly](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role).)*
+clicks on the sort icon. _(Note that the above technique is not very
+[accessible-friendly](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role).)_
 
 The component translates this click event into the specific event, `toggleSort`, that the component
 itself publishes.
@@ -212,13 +212,31 @@ public onHeaderClicked(event) {
 ```
 
 The `ImageDetailTable` specifies bindings to the `SortableColumnHeader` properties. It provides the
-current sort state of the column and binds the the `toggleSort` event for the column.  In the example
+current sort state of the column and binds the the `toggleSort` event for the column. In the example
 application three of the columns can be sorted.
 
 ```html
-<th class="sortable-column-header" [sortIndicator]="titleSortIndicator" (toggleSort)="sortByTitle()">Title</th>
-<th class="sortable-column-header" [sortIndicator]="sizeSortIndicator" (toggleSort)="sortBySize()">Size (bytes)</th>
-<th class="sortable-column-header" [sortIndicator]="dateSortIndicator" (toggleSort)="sortByDate()">Taken</th>
+<th
+  class="sortable-column-header"
+  [sortIndicator]="titleSortIndicator"
+  (toggleSort)="sortByTitle()"
+>
+  Title
+</th>
+<th
+  class="sortable-column-header"
+  [sortIndicator]="sizeSortIndicator"
+  (toggleSort)="sortBySize()"
+>
+  Size (bytes)
+</th>
+<th
+  class="sortable-column-header"
+  [sortIndicator]="dateSortIndicator"
+  (toggleSort)="sortByDate()"
+>
+  Taken
+</th>
 ```
 
 The `ImageDetailTable` then translates the toggle sort events into its own specific events.
@@ -230,10 +248,10 @@ The `ImageDetailTable` then translates the toggle sort events into its own speci
 ```
 
 These events ultimately get handled by the `ImageDetailList` component, the root
-component in the hierarchy of components.  It knows more about the application state and
-what should actually happen when the user sorts a column.  In this case it creates an action
-to submit to the Redux application store. *(We'll cover working with Redux and the application
-state in a future post.)*
+component in the hierarchy of components. It knows more about the application state and
+what should actually happen when the user sorts a column. In this case it creates an action
+to submit to the Redux application store. _(We'll cover working with Redux and the application
+state in a future post.)_
 
 ```javascript
 public sortByTitle() {
@@ -256,7 +274,7 @@ ultimately having the parent component do something with it.
 ## ImageDetailRow - A Table Row with Image Details
 
 The `ImageDetailRow` component handles generating a row of image details within the table.
-The table uses `*ngFor` to generate the table row (the `<tr>` element).  In the markup below
+The table uses `*ngFor` to generate the table row (the `<tr>` element). In the markup below
 for using this component, `#rowData` specifies a variable that can be used elsewhere.
 We then use this variable to pass the image data into the `rowData` input property on
 the `ImageDetailRow` component.
@@ -269,7 +287,7 @@ the `ImageDetailRow` component.
 
 Markup in an table is a bit more constrained than other HTML markup, so we don't want to use a
 custom HTML element for the detail row component. In this case we use a different selector, one
-that selects the `image-detail-row` CSS class.  The template for the row then consists of
+that selects the `image-detail-row` CSS class. The template for the row then consists of
 the table data elements (`<td>`) within the row. It makes the assumption that the
 component would only be included within an HTML table row (a `<tr>` element).
 
@@ -302,7 +320,7 @@ also cover in a future post).
 ## ImageTagSelector - Selecting Image Tags to Include
 
 Finally, the `ImageTagSelector` component is used to select a subset of images to display based on tags
-that have been assigned to all of the images.  This component deals with the application state
+that have been assigned to all of the images. This component deals with the application state
 directly rather than being a presentation component (though it certainly could have
 been implemented that way).
 
@@ -319,10 +337,13 @@ images in the collection.
 
 ```html
 <label>
-    <input #tagInput type="checkbox"
-           [ngModel]="tag.isSelected"
-           (ngModelChange)="toggleSelectedTag(tag.tag, tagInput.checked)">
-    {{tag.tag}}
+  <input
+    #tagInput
+    type="checkbox"
+    [ngModel]="tag.isSelected"
+    (ngModelChange)="toggleSelectedTag(tag.tag, tagInput.checked)"
+  />
+  {{tag.tag}}
 </label>
 ```
 

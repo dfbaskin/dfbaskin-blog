@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const MeLink = () => {
   return (
@@ -11,7 +11,7 @@ const MeLink = () => {
         />
       </svg>
     </a>
-  )
-}
+  );
+};
 
-export default MeLink
+export default MeLink;

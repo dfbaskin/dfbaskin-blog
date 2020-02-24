@@ -1,9 +1,9 @@
 ---
-title:          NG-CONF 2017 Day One Highlights
-date:           2017-04-07T00:01:53.251Z
+title: NG-CONF 2017 Day One Highlights
+date: 2017-04-07T00:01:53.251Z
 tags:
-    - ng-conf
-    - Angular
+  - ng-conf
+  - Angular
 ---
 
 I’m glad to be back again at ng-conf in Salt Lake City. I’ve used
@@ -96,27 +96,26 @@ Related to this, the [Material Design](https://material.angular.io/)
 team has done great work to make the Material components integrate
 better with standard HTML markup. For example, instead of defining a
 `<md-button>` custom component, you can attach an `md-button`
-attribute to the button element itself instead, `<button
-md-button ...>`. These, along with many other optimizations make the
+attribute to the button element itself instead, `<button md-button ...>`. These, along with many other optimizations make the
 library much more flexible and more natural to those creating HTML
 markup.
 
 ## Other Highlights
 
--   The [Angular
-    Animations](https://angular.io/docs/ts/latest/guide/animations.html)
-    module has been updated to include a feature that has been requested
-    frequently, the ability to add animations to route transitions.
+- The [Angular
+  Animations](https://angular.io/docs/ts/latest/guide/animations.html)
+  module has been updated to include a feature that has been requested
+  frequently, the ability to add animations to route transitions.
 
--   The Angular team wants to continue to improve the CLI in many areas,
-    including increasing the speed of building the application, reducing
-    the size of the output, using a common configuration for both
-    development and production (to reduce differences in operation
-    between environments), better error messages. They also want to get
-    to the point where the CLI is more like an SDK that can be
-    customized with plugins, custom templates, and additional tooling.
+- The Angular team wants to continue to improve the CLI in many areas,
+  including increasing the speed of building the application, reducing
+  the size of the output, using a common configuration for both
+  development and production (to reduce differences in operation
+  between environments), better error messages. They also want to get
+  to the point where the CLI is more like an SDK that can be
+  customized with plugins, custom templates, and additional tooling.
 
--   [Tobias Bosch](https://twitter.com/tbosch1009) did a deep dive into
-    the Angular Ahead-of-Time (AOT) compiler, explaining what was going
-    on in building components and HTML templates into JavaScript
-    executed at run time.
+- [Tobias Bosch](https://twitter.com/tbosch1009) did a deep dive into
+  the Angular Ahead-of-Time (AOT) compiler, explaining what was going
+  on in building components and HTML templates into JavaScript
+  executed at run time.

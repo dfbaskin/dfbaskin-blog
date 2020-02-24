@@ -1,9 +1,9 @@
 ---
-title:          NG-CONF 2017 Day Two Highlights
-date:           2017-04-09T15:37:30.672Z
+title: NG-CONF 2017 Day Two Highlights
+date: 2017-04-09T15:37:30.672Z
 tags:
-    - ng-conf
-    - Angular
+  - ng-conf
+  - Angular
 ---
 
 Day Two changes things up from the Day One and Day Three single-track
@@ -34,24 +34,24 @@ course, is the Developer Tools within the browser (there was a lot of
 praise for the capabilities of Chrome Developer tools particularly).
 Other tools mentioned were:
 
--   [Lighthouse](https://developers.google.com/web/tools/lighthouse/) –
-    a chrome extension / command-line tool that audits for performance,
-    accessibility, and other interesting metrics. This can be used in a
-    continuous integration environment as well.
+- [Lighthouse](https://developers.google.com/web/tools/lighthouse/) –
+  a chrome extension / command-line tool that audits for performance,
+  accessibility, and other interesting metrics. This can be used in a
+  continuous integration environment as well.
 
--   [Source Map Explorer](https://github.com/danvk/source-map-explorer)
-    – a tool that helps analyze code bundles to avoid bringing in
-    additional code that is not used, improving the size of bundles.
+- [Source Map Explorer](https://github.com/danvk/source-map-explorer)
+  – a tool that helps analyze code bundles to avoid bringing in
+  additional code that is not used, improving the size of bundles.
 
--   [Webpack Bundle
-    Analyzer](https://github.com/th0r/webpack-bundle-analyzer) – a tool
-    for analyzing the bundles that are created specifically by
-    [Webpack](https://webpack.js.org/) (generated from its own log
-    files).
+- [Webpack Bundle
+  Analyzer](https://github.com/th0r/webpack-bundle-analyzer) – a tool
+  for analyzing the bundles that are created specifically by
+  [Webpack](https://webpack.js.org/) (generated from its own log
+  files).
 
--   [Bazel](https://bazel.build/) – an open-source version of Google’s
-    own build tool. It represents work that they’ve done internally for
-    fast, optimized builds on an extremely large scale.
+- [Bazel](https://bazel.build/) – an open-source version of Google’s
+  own build tool. It represents work that they’ve done internally for
+  fast, optimized builds on an extremely large scale.
 
 Generally, the presenters seemed satisfied with what they could do with
 Angular within their own organizations. They were also continuing to

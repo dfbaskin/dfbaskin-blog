@@ -1,12 +1,12 @@
 ---
-title:          Big Ideas Behind Angular2
-date:           2016-04-12T01:01:42Z
+title: Big Ideas Behind Angular2
+date: 2016-04-12T01:01:42Z
 tags:
-    - Angular2
-    - Javascript
-    - Web Applications
-    - Redux
-    - Observables
+  - Angular2
+  - Javascript
+  - Web Applications
+  - Redux
+  - Observables
 ---
 
 When I first started using [AngularJS](https://angularjs.org/) (way back in version 0.8, I believe),
@@ -27,7 +27,7 @@ the Angular team has done a great job of improving the framework.
 
 I've built an example application to manage a list of images. It’s not a full featured application, but I wanted to
 build something that had a reasonably complex user interface and also incorporated routes and UI controls (and wasn’t a
-To-Do application).  I also wanted to explore new ways to deal with application state using
+To-Do application). I also wanted to explore new ways to deal with application state using
 [immutable data](https://facebook.github.io/immutable-js/) and
 [Redux](http://redux.js.org/).
 
@@ -45,7 +45,7 @@ etc.) that developers are overwhelmed by all the options. It’s exhausting just
 I can definitely understand these feelings, but I read this a little bit differently. Yes, there is a confusing mash
 of options available and it is hard to tell which ones are important and should receive our attention. But there are
 also a lot of big ideas being discussed in public, open forums about how best to build applications. Ideas are being
-put out there, debated, refined, and tested. To me, it’s actually pretty interesting.  It’s hard to keep up, but I do
+put out there, debated, refined, and tested. To me, it’s actually pretty interesting. It’s hard to keep up, but I do
 think folks are gathering around several big ideas that benefit us as developers.
 
 ## Functional Programming
@@ -71,7 +71,7 @@ tree of components, starting at a root and working through the tree to more spec
 can be assembled from smaller components, which makes understanding, writing, and testing the pieces of your
 application much easier.
 
-Components can be further categorized as well.  A common way to think about components is to separate them into
+Components can be further categorized as well. A common way to think about components is to separate them into
 two categories, components that organize and orchestrate application logic and components
 that present user interface with inputs and outputs. This distinction is sometimes called “smart”
 and “dumb” components.
@@ -125,7 +125,7 @@ is a new object and this object has a different reference. So the test
 for whether an immutable object has changed simply boils down to an equality test.
 
 ```javascript
-let modelHasChanged = (myNewReference !== myPreviousReference);
+let modelHasChanged = myNewReference !== myPreviousReference;
 ```
 
 Angular2 can [use this concept](http://victorsavkin.com/post/110170125256/change-detection-in-angular-2)
@@ -140,12 +140,12 @@ However, we can also take it a step further and consider a more concise way to m
 
 An application transitions between different states based on some stimulus, like a user pressing a button, a message
 being received, or whatever. It’s important to understand what should happen when the application transitions from
-one state to another. This is especially true for an application that has any reasonably complex user interface.  Too
+one state to another. This is especially true for an application that has any reasonably complex user interface. Too
 often applications devolve into unmanageable mess of message handling and data changes as the application
 grows in complexity.
 
 If we separate our application state from our user interface and manage it more concisely, we can better understand
-how our application works and more safely update and improve it.  We can move the handling of application state
+how our application works and more safely update and improve it. We can move the handling of application state
 changes to its own system to isolate it from the rest of the application.
 
 [Redux](http://redux.js.org/) is a popular example of doing exactly this. It defines an application store,
@@ -186,15 +186,15 @@ now returns an observable instead of a promise.
 This is a significant change, but why was it required? Because observables have a few advantages over promises.
 
 - Observables only activate when a subscription to the observable is created. In other words, they are “lazy”. The
-operation associated with a promise is activated when the promise is first created.
+  operation associated with a promise is activated when the promise is first created.
 
 - Observables can be canceled. There are ways to cancel a promise, but generally involve creating a “back door” into
-the operation the promise wraps. Being able to cancel, for example, an HTTP request allows for more robust
-applications.
+  the operation the promise wraps. Being able to cancel, for example, an HTTP request allows for more robust
+  applications.
 
 - Promises can be chained together, allowing you to transform the results of a promise operation in interesting ways,
-but Observables have even more capability. Observables can be used to orchestrate asynchronous operations in ways
-much more diverse than simple promise chains.
+  but Observables have even more capability. Observables can be used to orchestrate asynchronous operations in ways
+  much more diverse than simple promise chains.
 
 If for some reason, however, you still need or want to use promises in your own application, it is a simple matter to
 wrap the output of an observable in a promise that can then be provided to other parts of your application.

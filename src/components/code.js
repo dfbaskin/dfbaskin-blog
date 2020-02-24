@@ -1,10 +1,15 @@
-import React from "react"
-import Highlight, { defaultProps } from "prism-react-renderer"
+import React from "react";
+import Highlight, { defaultProps } from "prism-react-renderer";
 import theme from "prism-react-renderer/themes/duotoneLight";
 
 export const Code = ({ codeString, language, ...props }) => {
   return (
-    <Highlight {...defaultProps} code={codeString} language={language} theme={theme}>
+    <Highlight
+      {...defaultProps}
+      code={codeString}
+      language={language}
+      theme={theme}
+    >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre className={className} style={style}>
           {tokens.map((line, i) => (
@@ -17,5 +22,5 @@ export const Code = ({ codeString, language, ...props }) => {
         </pre>
       )}
     </Highlight>
-  )
-}
+  );
+};
