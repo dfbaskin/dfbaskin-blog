@@ -8,7 +8,7 @@ export default function PageTemplate({ data: { mdx } }) {
   return (
     <Layout>
       <SEO title={mdx.frontmatter.title} />
-      <article className="markdown">
+      <article className="markdown default-width">
         <header>
           <h1>{mdx.frontmatter.title}</h1>
         </header>

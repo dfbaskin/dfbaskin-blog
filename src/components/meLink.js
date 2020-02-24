@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "gatsby";
 
 const MeLink = () => {
   return (
-    <a href="/about" className="icon-link">
+    <Link to="/about" className="icon-link">
       <svg role="img" viewBox="0 0 24 24">
         <title>About Me</title>
         <path
@@ -10,7 +11,7 @@ const MeLink = () => {
 	C24,5.8,18.6,0,12,0z M12.2,13c-2.3,0-4.1-2-4.1-4.4s1.8-4.4,4.1-4.4c2.3,0,4.1,2,4.1,4.4S14.5,13,12.2,13z"
         />
       </svg>
-    </a>
+    </Link>
   );
 };
 

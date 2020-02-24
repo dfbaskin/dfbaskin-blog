@@ -1,0 +1,22 @@
+.blog-header {
+  @apply p-4 border-gray-400 border-b-2 flex;
+  background: linear-gradient(#fff, #ddd);
+  > div:nth-of-type(1) {
+    @apply flex-auto;
+  }
+  > div:nth-of-type(2) {
+    @apply flex-none;
+  }
+
+  h1 {
+    @apply font-semibold text-lg inline-block;
+  }
+
+  .icon-link {
+    @apply inline-block ml-2;
+    > svg {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+  }
+}

@@ -25,7 +25,6 @@ body {
 }
 
 .markdown {
-  @apply default-width;
   h1 {
     @apply text-2xl font-semibold;
   }
@@ -43,24 +42,6 @@ body {
   }
   pre {
     @apply overflow-auto pt-6 px-4 pb-0;
-  }
-}
-
-footer {
-  @apply default-width border-t border-gray-300 pt-2 flex;
-  > div:nth-of-type(1) {
-    @apply flex-auto;
-  }
-  > div:nth-of-type(2) {
-    @apply flex-none;
-  }
-
-  .icon-link {
-    @apply inline-block ml-2;
-    > svg {
-      width: 1.6rem;
-      height: 1.6rem;
-    }
   }
 }
 

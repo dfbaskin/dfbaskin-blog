@@ -1,20 +1,15 @@
 import React from "react";
-
-import TwitterLink from "./twitterLink";
-import GitHubLink from "./githubLink";
-import MeLink from "./meLink";
+import "./footer.css";
+import { Link } from "gatsby";
 
 const Footer = ({ children }) => {
   const year = new Date().getFullYear();
-
   return (
-    <footer>
-      <div>© {year}, Dave F. Baskin</div>
+    <footer className="blog-footer default-width">
       <div>
-        <TwitterLink />
-        <GitHubLink />
-        <MeLink />
+        © {year}, <Link to="/about">Dave F. Baskin</Link>
       </div>
+      <div>{children}</div>
     </footer>
   );
 };
