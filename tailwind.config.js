@@ -4,4 +4,9 @@ module.exports = {
   },
   variants: {},
   plugins: [],
+  purge: false,
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
+  },
 };
