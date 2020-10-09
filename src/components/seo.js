@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Helmet from "react-helmet";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useSiteMetadata } from "../hooks";
 
 function SEO({ description, lang, meta, title }) {
@@ -45,14 +45,16 @@ function SEO({ description, lang, meta, title }) {
     },
   ].concat(meta);
   return (
-    <Helmet
-      htmlAttributes={{
-        lang,
-      }}
-      title={title}
-      titleTemplate={`%s | ${siteTitle}`}
-      meta={metaTags}
-    />
+    <HelmetProvider>
+      <Helmet
+        htmlAttributes={{
+          lang,
+        }}
+        title={title}
+        titleTemplate={`%s | ${siteTitle}`}
+        meta={metaTags}
+      />
+    </HelmetProvider>
   );
 }
 

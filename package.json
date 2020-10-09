@@ -19,7 +19,7 @@
     "gatsby-plugin-mdx": "^1.2.46",
     "gatsby-plugin-offline": "^3.2.31",
     "gatsby-plugin-postcss": "^2.3.13",
-    "gatsby-plugin-react-helmet": "^3.3.14",
+    "gatsby-plugin-react-helmet-async": "^1.1.0",
     "gatsby-plugin-sharp": "^2.6.40",
     "gatsby-remark-images": "^3.3.33",
     "gatsby-source-filesystem": "^2.3.34",
@@ -30,7 +30,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-helmet": "^5.2.1",
+    "react-helmet-async": "^1.0.7",
     "slugify": "^1.4.5",
     "tailwindcss": "^1.8.12"
   },
