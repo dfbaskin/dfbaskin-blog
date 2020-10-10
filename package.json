@@ -8,7 +8,6 @@
     "url": "https://github.com/dfbaskin/dfbaskin-blog/issues"
   },
   "dependencies": {
-    "@fullhuman/postcss-purgecss": "^2.3.0",
     "@hot-loader/react-dom": "^17.0.0-rc.2",
     "@mdx-js/mdx": "^1.6.18",
     "@mdx-js/react": "^1.6.18",
@@ -19,7 +18,6 @@
     "gatsby-plugin-mdx": "^1.2.46",
     "gatsby-plugin-offline": "^3.2.31",
     "gatsby-plugin-postcss": "^2.3.13",
-    "gatsby-plugin-purgecss": "^5.0.0",
     "gatsby-plugin-react-helmet-async": "^1.1.0",
     "gatsby-plugin-sharp": "^2.6.40",
     "gatsby-remark-images": "^3.3.33",
@@ -33,11 +31,17 @@
     "react-dom": "^16.13.1",
     "react-helmet-async": "^1.0.7",
     "slugify": "^1.4.5",
-    "tailwindcss": "^1.8.12"
+    "tailwindcss": "^1.8.13"
   },
   "homepage": "https://github.com/dfbaskin/dfbaskin-blog#readme",
   "keywords": [
     "gatsby"
+  ],
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not IE_Mob 11",
+    "maintained node versions"
   ],
   "license": "MIT",
   "repository": {

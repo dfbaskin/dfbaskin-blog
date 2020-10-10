@@ -4,7 +4,7 @@ module.exports = {
   },
   variants: {},
   plugins: [],
-  purge: false,
+  purge: ["./src/**/*.js", "./src/**/*.jsx", "./src/**/*.ts", "./src/**/*.tsx"],
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
