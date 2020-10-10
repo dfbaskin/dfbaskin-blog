@@ -24,7 +24,7 @@
     "gatsby-source-filesystem": "^2.3.34",
     "gatsby-transformer-sharp": "^2.5.17",
     "postcss-nested": "^4.2.3",
-    "prettier": "^1.19.1",
+    "prettier": "^2.1.2",
     "prism-react-renderer": "^1.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",

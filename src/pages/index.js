@@ -23,7 +23,7 @@ const IndexPage = () => {
     }
   `);
 
-  const posts = data.allMdx.nodes.map(node => {
+  const posts = data.allMdx.nodes.map((node) => {
     return {
       excerpt: node.excerpt,
       title: node.frontmatter.title,
