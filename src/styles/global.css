@@ -2,7 +2,7 @@
 @tailwind components;
 
 body {
-  @apply antialiased text-gray-900 font-sans;
+  @apply antialiased text-gray-900 font-sans bg-gradient-to-t from-blue-100;
 }
 
 .default-width {

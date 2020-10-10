@@ -1,6 +1,5 @@
 .blog-header {
-  @apply p-4 border-gray-400 border-b-2 flex;
-  background: linear-gradient(#fff, #ddd);
+  @apply p-4 border-gray-400 border-b-2 flex bg-gradient-to-t from-blue-200 to-blue-100;
   > div:nth-of-type(1) {
     @apply flex-auto;
   }
