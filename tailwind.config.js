@@ -1,6 +1,9 @@
 module.exports = {
   theme: {
     extend: {},
+    fontFamily: {
+      'sans': ['OpenSans', 'Sans-serif'],
+    }
   },
   variants: {},
   plugins: [],
@@ -8,5 +11,5 @@ module.exports = {
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
-  },
+  }
 };

@@ -8,7 +8,7 @@
   }
 
   h1 {
-    @apply font-semibold text-lg inline-block;
+    @apply font-medium text-xl inline-block;
   }
 
   .icon-link {
