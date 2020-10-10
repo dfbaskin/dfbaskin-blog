@@ -11,7 +11,12 @@ function PostExcerpt({ excerpt, title, slug, date }) {
         <Link to={link}>{title}</Link>
       </h3>
       <div>{date}</div>
-      <div>{excerpt}</div>
+      <div>
+        {excerpt}
+      </div>
+      <div className="read-link">
+        <Link to={link}>Read Article ...</Link>
+      </div>
     </section>
   );
 }
