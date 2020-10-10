@@ -3,7 +3,11 @@
 @tailwind components;
 
 body {
-  @apply antialiased text-gray-900 text-lg tracking-wide leading-snug font-sans bg-gradient-to-t from-blue-100;
+  @apply antialiased text-gray-900 text-lg tracking-wide leading-snug font-sans;
+}
+
+html {
+  @apply bg-gradient-to-t from-blue-100 min-h-screen;
 }
 
 .default-width {

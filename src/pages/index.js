@@ -10,7 +10,7 @@ const IndexPage = () => {
     query AllPostsQuery {
       allMdx(sort: { fields: frontmatter___date, order: DESC }) {
         nodes {
-          excerpt
+          excerpt(pruneLength: 240)
           frontmatter {
             title
             date
