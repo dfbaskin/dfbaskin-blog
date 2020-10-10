@@ -1,6 +1,7 @@
 import React from "react";
 import { MDXProvider } from "@mdx-js/react";
 import { Code } from "./code";
+import { HelmetProvider } from "react-helmet-async";
 
 const components = {
   code: ({ className, children }) => {
@@ -13,5 +14,9 @@ const components = {
 };
 
 export default function RootProviders({ element }) {
-  return <MDXProvider components={components}>{element}</MDXProvider>;
+  return (
+    <HelmetProvider>
+      <MDXProvider components={components}>{element}</MDXProvider>;
+    </HelmetProvider>
+  );
 }
