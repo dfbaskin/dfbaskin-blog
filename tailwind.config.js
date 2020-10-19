@@ -2,7 +2,7 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      'sans': ['OpenSans', 'Sans-serif'],
+      'sans': ['Crimson Text', 'Sans-serif'],
     }
   },
   variants: {},
