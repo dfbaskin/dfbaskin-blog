@@ -8,6 +8,8 @@
     "url": "https://github.com/dfbaskin/dfbaskin-blog/issues"
   },
   "dependencies": {
+    "@mdx-js/loader": "^1.6.19",
+    "@next/mdx": "^10.0.0",
     "gray-matter": "^4.0.2",
     "next": "^10.0.0",
     "react": "^17.0.1",

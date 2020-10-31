@@ -2,8 +2,8 @@ const { promisify } = require("util");
 const fs = require("fs");
 const { join, resolve, relative, extname, basename } = require("path");
 const matter = require("gray-matter");
-const { of, from, defer, pipe } = require("rxjs");
-const { mergeMap, map, tap } = require("rxjs/operators");
+const { of, from, pipe, merge } = require("rxjs");
+const { mergeMap, map, reduce, filter } = require("rxjs/operators");
 
 const readdir = promisify(fs.readdir);
 const readFile = promisify(fs.readFile);
@@ -12,38 +12,65 @@ const stat = promisify(fs.stat);
 
 const contentPath = join(__dirname, "..", "content/posts");
 const postsPagesPath = join(__dirname, "..", "pages/posts");
+const catalogPath = join(postsPagesPath, "posts-catalog.json");
 
-of(null)
-  .pipe(
-    mergeMap(() => readdirRecursive(contentPath)),
-    mergeMap((items) => {
-      const list = items.map((relativePath) => {
-        const extension = extname(relativePath).toLowerCase();
-        return {
-          file: {
-            rootPath: contentPath,
-            relativePath,
-            extension,
-          },
-        };
+const fileStream = of(null).pipe(
+  mergeMap(() => readdirRecursive(contentPath)),
+  mergeMap((items) => {
+    const list = items.map((relativePath) => {
+      const extension = extname(relativePath).toLowerCase();
+      return {
+        file: {
+          rootPath: contentPath,
+          relativePath,
+          extension,
+        },
+      };
+    });
+    return from(list);
+  }),
+  mergeMap((item) => {
+    if (item.file.extension === ".md") {
+      return of(item).pipe(loadMarkdownContent());
+    }
+    return of(item);
+  })
+);
+
+const catalogStream = fileStream.pipe(
+  filter((item) => item.frontmatter),
+  reduce((catalog, item) => {
+    catalog.push(item);
+    return catalog;
+  }, []),
+  mergeMap((catalog) => {
+    const sorted = catalog
+      .map(({ frontmatter, slug }) => ({
+        frontmatter,
+        slug,
+      }))
+      .sort(({ date: d1 }, { date: d2 }) => {
+        if (d1 < d2) {
+          return -1;
+        } else if (d1 > d2) {
+          return 1;
+        } else {
+          return 0;
+        }
       });
-      return from(list);
-    }),
-    mergeMap((item) => {
-      if (item.file.extension === ".md") {
-        return of(item).pipe(loadMarkdownContent());
-      }
-      return of(item);
-    })
-  )
-  .subscribe({
-    error(err) {
-      console.error(err);
-    },
-    complete() {
-      console.log("Finished.");
-    },
-  });
+    const content = JSON.stringify(sorted, null, 2);
+    return writeFile(catalogPath, content, "utf8");
+  })
+);
+
+merge(fileStream, catalogStream).subscribe({
+  error(err) {
+    console.error(err);
+  },
+  complete() {
+    console.log("Finished.");
+  },
+});
 
 function loadMarkdownContent() {
   const matterOptions = {
@@ -63,29 +90,32 @@ function loadMarkdownContent() {
       }));
     }),
     mergeMap((item) => {
+      const {
+        file: { relativePath },
+        matter: { data, content },
+      } = item;
+      const frontmatter = data;
+      const slug = `/posts/${basename(relativePath, extname(relativePath))}`;
+      const fileName = join(
+        postsPagesPath,
+        `${basename(relativePath, extname(relativePath))}.mdx`
+      );
+      const wrapped = wrapMdxContent({
+        meta: {
+          ...frontmatter,
+          slug,
+        },
+        content,
+      });
+
       return of(item).pipe(
-        mergeMap((item) => {
-          const {
-            file: { relativePath },
-            matter: { content },
-          } = item;
-          const fileName = join(
-            postsPagesPath,
-            `${basename(relativePath, extname(relativePath))}.mdx`
-          );
-          return writeFile(fileName, content, "utf8");
-        }),
+        mergeMap(() => writeFile(fileName, wrapped, "utf8")),
         map(() => {
           const { file } = item;
-          const {
-            file: { relativePath },
-            matter,
-          } = item;
           return {
             file,
-            frontmatter: matter.data,
-            isEmpty: matter.isEmpty,
-            slug: `/posts/${basename(relativePath, extname(relativePath))}`,
+            frontmatter,
+            slug,
           };
         })
       );
@@ -111,4 +141,18 @@ async function* readdirRecursiveIterator(path) {
       yield subPath;
     }
   }
+}
+
+function wrapMdxContent({ meta, content }) {
+  return `
+import {BlogPost} from "../../src/components/BlogPost";
+
+export const meta = ${JSON.stringify(meta, null, 2)};
+
+<BlogPost>
+
+${content}
+
+</BlogPost>
+`;
 }
