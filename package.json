@@ -8,35 +8,13 @@
     "url": "https://github.com/dfbaskin/dfbaskin-blog/issues"
   },
   "dependencies": {
-    "@hot-loader/react-dom": "^17.0.0-rc.2",
-    "@mdx-js/mdx": "^1.6.18",
-    "@mdx-js/react": "^1.6.18",
-    "autoprefixer": "^9.8.6",
-    "gatsby": "^2.24.73",
-    "gatsby-image": "^2.4.21",
-    "gatsby-plugin-manifest": "^2.4.34",
-    "gatsby-plugin-mdx": "^1.2.46",
-    "gatsby-plugin-offline": "^3.2.31",
-    "gatsby-plugin-postcss": "^2.3.13",
-    "gatsby-plugin-react-helmet-async": "^1.1.0",
-    "gatsby-plugin-sharp": "^2.6.40",
-    "gatsby-remark-images": "^3.3.33",
-    "gatsby-source-filesystem": "^2.3.34",
-    "gatsby-transformer-sharp": "^2.5.17",
-    "postcss-nested": "^4.2.3",
-    "prettier": "^2.1.2",
-    "prism-react-renderer": "^1.1.1",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-helmet-async": "^1.0.7",
-    "slugify": "^1.4.5",
-    "tailwindcss": "^1.8.13"
+    "gray-matter": "^4.0.2",
+    "next": "^10.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "rxjs": "^6.6.3"
   },
   "homepage": "https://github.com/dfbaskin/dfbaskin-blog#readme",
-  "keywords": [
-    "gatsby"
-  ],
   "browserslist": [
     "defaults",
     "not IE 11",
@@ -49,12 +27,8 @@
     "url": "https://github.com/dfbaskin/dfbaskin-blog.git"
   },
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   }
 }
