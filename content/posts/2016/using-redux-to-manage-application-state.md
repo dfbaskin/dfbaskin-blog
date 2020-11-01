@@ -271,7 +271,7 @@ class.
 ```javascript
 export function provideAppStore() {
   return new Provider(AppStore, {
-    useFactory: reducers => {
+    useFactory: (reducers) => {
       let combinedReducers = reducers.reduce(
         (combined, reducer) => Object.assign(combined, reducer),
         {}

@@ -46,11 +46,11 @@ This is a portion of the main HTML page:
   <script src="config.js"></script>
   <script>
     Promise.all([System.import("angular"), System.import("js/app/mainCtrl")])
-      .then(function(modules) {
+      .then(function (modules) {
         var angular = modules[0];
         angular.bootstrap(document, ["mainApp"]);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log("Bootstrap error:");
         console.log(err);
       });

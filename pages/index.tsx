@@ -12,7 +12,7 @@ export default function HomePage({ posts }: Props) {
     <div>
       <h1>Posts</h1>
       {posts.map((post, idx) => {
-          return <BlogPostSummary key={idx} post={post} />
+        return <BlogPostSummary key={idx} post={post} />;
       })}
     </div>
   );
