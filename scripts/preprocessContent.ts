@@ -1,18 +1,22 @@
 import { promisify } from "util";
+import mkdirp from "mkdirp";
 import fs from "fs";
 import { join, resolve, relative, extname, basename } from "path";
 import matter from "gray-matter";
-import { of, from, pipe, merge } from "rxjs";
+import { of, from, pipe, concat, merge } from "rxjs";
 import { mergeMap, map, reduce, filter } from "rxjs/operators";
+import {
+  contentPath,
+  postsPagesPath,
+  imagesPath,
+  catalogPath,
+} from "./buildInfo";
 
 const readdir = promisify(fs.readdir);
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
+const copyFile = promisify(fs.copyFile);
 const stat = promisify(fs.stat);
-
-const contentPath = join(__dirname, "..", "content/posts");
-const postsPagesPath = join(__dirname, "..", "pages/posts");
-const catalogPath = join(postsPagesPath, "posts-catalog.json");
 
 interface ItemFileDetails {
   file: {
@@ -44,7 +48,7 @@ const fileStream = of(null).pipe(
           rootPath: contentPath,
           relativePath,
           extension,
-        }
+        },
       };
       return item;
     });
@@ -59,7 +63,7 @@ const fileStream = of(null).pipe(
 );
 
 const catalogStream = fileStream.pipe(
-  filter(item => isMarkdownItem(item)),
+  filter((item) => isMarkdownItem(item)),
   reduce((catalog, item) => {
     catalog.push(item as MarkdownItemDetails);
     return catalog;
@@ -84,7 +88,24 @@ const catalogStream = fileStream.pipe(
   })
 );
 
-merge(fileStream, catalogStream).subscribe({
+const imageStream = fileStream.pipe(
+  filter((item) => !isMarkdownItem(item)),
+  mergeMap((item) => {
+    const {
+      file: { rootPath, relativePath },
+    } = item;
+    const sourceFile = join(rootPath, relativePath);
+    const destFile = join(imagesPath, basename(relativePath));
+    return copyFile(sourceFile, destFile);
+  })
+);
+
+const initializationStream = of(null).pipe(mergeMap(() => createBuildPaths()));
+
+concat(
+  initializationStream,
+  merge(fileStream, catalogStream, imageStream)
+).subscribe({
   error(err) {
     console.error(err);
   },
@@ -144,6 +165,11 @@ function loadMarkdownContent() {
   );
 }
 
+async function createBuildPaths() {
+  await mkdirp(postsPagesPath);
+  await mkdirp(imagesPath);
+}
+
 async function readdirRecursive(path: string) {
   const items = [];
   for await (const entry of readdirRecursiveIterator(path)) {
@@ -152,7 +178,7 @@ async function readdirRecursive(path: string) {
   return items;
 }
 
-async function* readdirRecursiveIterator(path: string) : AsyncGenerator<string> {
+async function* readdirRecursiveIterator(path: string): AsyncGenerator<string> {
   for (const entry of await readdir(path)) {
     const subPath = resolve(path, entry);
     const entryStat = await stat(subPath);

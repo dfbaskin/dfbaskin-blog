@@ -1,6 +1,7 @@
 node_modules/
 
 pages/posts/
+public/posts/images/
 
 .next/
 
