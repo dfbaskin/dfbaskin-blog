@@ -1,9 +1,9 @@
-const { promisify } = require("util");
-const fs = require("fs");
-const { join, resolve, relative, extname, basename } = require("path");
-const matter = require("gray-matter");
-const { of, from, pipe, merge } = require("rxjs");
-const { mergeMap, map, reduce, filter } = require("rxjs/operators");
+import { promisify } from "util";
+import fs from "fs";
+import { join, resolve, relative, extname, basename } from "path";
+import matter from "gray-matter";
+import { of, from, pipe, merge } from "rxjs";
+import { mergeMap, map, reduce, filter } from "rxjs/operators";
 
 const readdir = promisify(fs.readdir);
 const readFile = promisify(fs.readFile);
@@ -14,18 +14,39 @@ const contentPath = join(__dirname, "..", "content/posts");
 const postsPagesPath = join(__dirname, "..", "pages/posts");
 const catalogPath = join(postsPagesPath, "posts-catalog.json");
 
+interface ItemFileDetails {
+  file: {
+    rootPath: string;
+    relativePath: string;
+    extension: string;
+  };
+}
+interface MarkdownItemDetails extends ItemFileDetails {
+  frontmatter: {
+    date: string;
+    [key: string]: any;
+  };
+  slug: string;
+}
+function isMarkdownItem(
+  item: ItemFileDetails | MarkdownItemDetails
+): item is MarkdownItemDetails {
+  return (item as MarkdownItemDetails).frontmatter !== undefined;
+}
+
 const fileStream = of(null).pipe(
   mergeMap(() => readdirRecursive(contentPath)),
   mergeMap((items) => {
     const list = items.map((relativePath) => {
       const extension = extname(relativePath).toLowerCase();
-      return {
+      const item: ItemFileDetails = {
         file: {
           rootPath: contentPath,
           relativePath,
           extension,
-        },
+        }
       };
+      return item;
     });
     return from(list);
   }),
@@ -38,22 +59,22 @@ const fileStream = of(null).pipe(
 );
 
 const catalogStream = fileStream.pipe(
-  filter((item) => item.frontmatter),
+  filter(item => isMarkdownItem(item)),
   reduce((catalog, item) => {
-    catalog.push(item);
+    catalog.push(item as MarkdownItemDetails);
     return catalog;
-  }, []),
+  }, [] as MarkdownItemDetails[]),
   mergeMap((catalog) => {
     const sorted = catalog
       .map(({ frontmatter, slug }) => ({
         frontmatter,
         slug,
       }))
-      .sort(({ date: d1 }, { date: d2 }) => {
+      .sort(({ frontmatter: { date: d1 } }, { frontmatter: { date: d2 } }) => {
         if (d1 < d2) {
-          return -1;
-        } else if (d1 > d2) {
           return 1;
+        } else if (d1 > d2) {
+          return -1;
         } else {
           return 0;
         }
@@ -80,7 +101,7 @@ function loadMarkdownContent() {
     // },
   };
   return pipe(
-    mergeMap((item) => {
+    mergeMap((item: ItemFileDetails) => {
       const {
         file: { rootPath, relativePath },
       } = item;
@@ -123,7 +144,7 @@ function loadMarkdownContent() {
   );
 }
 
-async function readdirRecursive(path) {
+async function readdirRecursive(path: string) {
   const items = [];
   for await (const entry of readdirRecursiveIterator(path)) {
     items.push(relative(path, entry));
@@ -131,7 +152,7 @@ async function readdirRecursive(path) {
   return items;
 }
 
-async function* readdirRecursiveIterator(path) {
+async function* readdirRecursiveIterator(path: string) : AsyncGenerator<string> {
   for (const entry of await readdir(path)) {
     const subPath = resolve(path, entry);
     const entryStat = await stat(subPath);
@@ -143,7 +164,14 @@ async function* readdirRecursiveIterator(path) {
   }
 }
 
-function wrapMdxContent({ meta, content }) {
+interface MdxData {
+  meta: {
+    [key: string]: any;
+  };
+  content: string;
+}
+
+function wrapMdxContent({ meta, content }: MdxData) {
   return `
 import {BlogPost} from "../../src/components/BlogPost";
 
