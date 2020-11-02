@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { Footer } from "./Footer";
+import { Header } from "./Header";
 
 interface Props {
   children: ReactNode;
@@ -7,9 +8,9 @@ interface Props {
 
 export function BlogPost({ children }: Props) {
   return (
-    <div className="markdown default-width">
-      <h1>Blog Post</h1>
-      {children}
+    <div className="page">
+      <Header />
+      <div className="markdown">{children}</div>
       <Footer />
     </div>
   );
