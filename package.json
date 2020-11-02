@@ -10,11 +10,14 @@
   "dependencies": {
     "@mdx-js/loader": "^1.6.19",
     "@next/mdx": "^10.0.0",
+    "autoprefixer": "^10.0.1",
     "gray-matter": "^4.0.2",
     "next": "^10.0.0",
+    "postcss-nested": "^5.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "rxjs": "^6.6.3"
+    "rxjs": "^6.6.3",
+    "tailwindcss": "^1.9.6"
   },
   "devDependencies": {
     "@types/mkdirp": "^1.0.1",
