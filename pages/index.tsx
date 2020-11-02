@@ -1,6 +1,7 @@
 import React from "react";
 import posts from "../public/posts/posts.json";
 import { BlogPostSummary } from "../src/components/BlogPostSummary";
+import { Layout } from "../src/components/Layout";
 import { BlogPostMetadata } from "../src/models/BlogPostMetadata";
 
 interface Props {
@@ -9,12 +10,12 @@ interface Props {
 
 export default function HomePage({ posts }: Props) {
   return (
-    <div>
+    <Layout>
       <h1>Posts</h1>
       {posts.map((post, idx) => {
         return <BlogPostSummary key={idx} post={post} />;
       })}
-    </div>
+    </Layout>
   );
 }
 
