@@ -1,0 +1,9 @@
+.blogPostSummary {
+  @apply mb-6 leading-tight;
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+  p {
+    @apply font-light;
+  }
+}

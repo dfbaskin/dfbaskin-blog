@@ -1,20 +1,18 @@
 .blogHeader {
-  @apply p-4 border-gray-400 border-b-2 flex bg-gradient-to-t from-blue-200 to-blue-100;
-  > div:nth-of-type(1) {
-    @apply flex-auto;
-  }
-  > div:nth-of-type(2) {
-    @apply flex-none min-w-0;
+  @apply border-gray-400 border-b-2 flex justify-between bg-gradient-to-t from-blue-200 to-blue-100;
+
+  > div {
+    @apply p-4;
   }
 
   h1 {
-    @apply font-medium text-2xl inline-block;
+    @apply font-medium text-3xl inline-block;
   }
   a {
-    @apply inline-block px-2;
+    @apply inline-block px-2 pt-2;
   }
   svg {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.8rem;
+    height: 1.8rem;
   }
 }
