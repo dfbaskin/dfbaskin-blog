@@ -11,6 +11,8 @@
     "@mdx-js/loader": "^1.6.21",
     "@next/mdx": "^10.0.2",
     "autoprefixer": "^10.0.2",
+    "fontsource-crimson-pro": "^3.0.5",
+    "fontsource-roboto-mono": "^3.0.3",
     "gray-matter": "^4.0.2",
     "next": "^10.0.2",
     "postcss-nested": "^5.0.1",

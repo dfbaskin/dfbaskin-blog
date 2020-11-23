@@ -4,4 +4,4 @@
 
 The source code for the blog from Dave Baskin (a.k.a., Web, Windows, and Whatnot).
 
-Built with [Gatsby](https://www.gatsbyjs.org/docs/).
+Built with [Nextjs](https://nextjs.org/).

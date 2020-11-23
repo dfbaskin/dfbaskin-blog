@@ -8,7 +8,7 @@
   }
 
   h1 {
-    @apply font-medium text-xl inline-block;
+    @apply font-medium text-2xl inline-block;
   }
   a {
     @apply inline-block px-2;

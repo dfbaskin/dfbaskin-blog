@@ -1,13 +1,15 @@
-@import url("https://fonts.googleapis.com/css?family=Crimson%20DText&display=swap");
+@import "fontsource-crimson-pro/index.css";
+@import "fontsource-roboto-mono/index.css";
+
 @tailwind base;
 @tailwind components;
 
 body {
-  @apply antialiased text-gray-900 text-lg tracking-wide leading-snug font-sans;
+  @apply antialiased text-gray-900 text-xl tracking-wide leading-snug font-serif;
 }
 
 html {
-  @apply bg-gradient-to-t from-blue-100 min-h-screen;
+  @apply min-h-screen;
 }
 
 .default-width {
@@ -46,7 +48,7 @@ html {
     }
   }
   pre {
-    @apply overflow-auto pt-6 px-4 pb-0;
+    @apply overflow-auto pt-6 px-4 pb-0 font-mono text-lg border-l-2 bg-gray-50 mt-8 mb-8;
   }
 }
 

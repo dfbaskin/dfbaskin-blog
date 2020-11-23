@@ -2,7 +2,8 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      sans: ["Crimson Text", "Sans-serif"],
+      serif: ["Crimson Pro", "serif"],
+      mono: ["Roboto Mono", "monospace"],
     },
   },
   variants: {},
