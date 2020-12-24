@@ -10,9 +10,18 @@ name: DeployDFBaskinWeb
 jobs:
   deploy-dfbaskin-web:
     runs-on: ubuntu-latest
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CONFIG: Release
+      DOTNET_RUNTIME: linux-x64
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.404
 
       - name: Install Node v14
         uses: actions/setup-node@v2
@@ -25,11 +34,17 @@ jobs:
       - name: Run Build
         run: npm run build
 
+      - name: Build the Server Application
+        run: |
+          dotnet build DFB.Web.csproj \
+            --configuration $DOTNET_CONFIG \
+            --runtime $DOTNET_RUNTIME
+
       - name: Create Zip Deployment File
         uses: thedoctor0/zip-release@master
         with:
           filename: dfbaskin-web.zip
-          directory: out
+          directory: bin/release/netcoreapp3.1
 
       - name: Login to Azure
         uses: azure/login@v1.1
@@ -44,4 +59,4 @@ jobs:
             az webapp deployment source config-zip \
               --resource-group ${{ secrets.WEB_SITE_RESOURCE_GROUP }} \
               --name dfbaskin-website \
-              --src ./out/dfbaskin-web.zip
+              --src ./bin/release/netcoreapp3.1/dfbaskin-web.zip
