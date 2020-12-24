@@ -53,7 +53,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "npm run preprocess && next build && next export",
+    "build": "npm run preprocess && next build && next export -o wwwroot",
     "start": "next start",
     "preprocess": "ts-node --project scripts/tsconfig.json scripts/preprocessContent.ts",
     "clean": "ts-node --project scripts/tsconfig.json scripts/cleanPreprocessContent.ts"

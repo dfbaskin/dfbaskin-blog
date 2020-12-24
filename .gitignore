@@ -5,3 +5,8 @@ public/posts/
 
 .next/
 out/
+
+bin/
+obj/
+
+wwwroot/
