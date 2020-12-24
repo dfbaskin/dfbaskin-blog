@@ -28,20 +28,24 @@ jobs:
       - name: Create Zip Deployment File
         uses: thedoctor0/zip-release@master
         with:
-          filename: ${{ github.workspace }}/dfbaskin-web.zip
+          filename: dfbaskin-web.zip
           directory: out
 
-      - name: Login to Azure
-        uses: azure/login@v1.1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - run: dir .
+      - run: dir ./out
+      - run: dir ${{ github.workspace }}
 
-      - name: Azure CLI script
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az webapp deployment source config-zip \
-              --resource-group ${{ secrets.WEB_SITE_RESOURCE_GROUP }} \
-              --name dfbaskin-website \
-              --src dfbaskin-web.zip
+      # - name: Login to Azure
+      #   uses: azure/login@v1.1
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # - name: Azure CLI script
+      #   uses: azure/CLI@v1
+      #   with:
+      #     azcliversion: latest
+      #     inlineScript: |
+      #       az webapp deployment source config-zip \
+      #         --resource-group ${{ secrets.WEB_SITE_RESOURCE_GROUP }} \
+      #         --name dfbaskin-website \
+      #         --src dfbaskin-web.zip
