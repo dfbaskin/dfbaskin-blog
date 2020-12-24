@@ -3,6 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot/**"> 
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory> 
+    </Content> 
+  </ItemGroup>
 
 </Project>
