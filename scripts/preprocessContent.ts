@@ -203,7 +203,7 @@ import {BlogPost} from "../../src/components/BlogPost";
 
 export const meta = ${JSON.stringify(meta, null, 2)};
 
-<BlogPost>
+<BlogPost meta={meta}>
 
 ${content}
 
