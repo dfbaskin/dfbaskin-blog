@@ -1,5 +1,5 @@
-@import "fontsource-crimson-pro/index.css";
-@import "fontsource-roboto-mono/index.css";
+@import "@fontsource/crimson-pro/index.css";
+@import "@fontsource/roboto-mono/index.css";
 
 @tailwind base;
 @tailwind components;
@@ -32,22 +32,22 @@ html {
 }
 
 .markdown {
-  h1 {
+  & h1 {
     @apply text-2xl font-semibold;
   }
-  h2 {
+  & h2 {
     @apply text-lg mt-8 font-semibold;
   }
-  p {
+  & p {
     @apply leading-snug mt-4;
   }
-  ul {
+  & ul {
     @apply mt-4;
     li {
       @apply ml-10 list-disc;
     }
   }
-  pre {
+  & pre {
     @apply overflow-auto pt-6 px-4 pb-0 font-mono text-lg border-l-2 bg-gray-50 mt-8 mb-8;
   }
 }
