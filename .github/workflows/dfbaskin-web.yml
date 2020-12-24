@@ -28,7 +28,7 @@ jobs:
       - name: Create Zip Deployment File
         uses: thedoctor0/zip-release@master
         with:
-          filename: dfbaskin-web.zip
+          filename: ${{ github.workspace }}/dfbaskin-web.zip
           directory: out
 
       - name: Login to Azure
