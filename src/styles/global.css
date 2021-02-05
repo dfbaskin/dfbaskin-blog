@@ -43,12 +43,19 @@ html {
   }
   & ul {
     @apply mt-4;
-    li {
+    & li {
       @apply ml-10 list-disc;
     }
   }
   & pre {
-    @apply overflow-auto pt-6 px-4 pb-0 font-mono text-lg border-l-2 bg-gray-50 mt-8 mb-8;
+    @apply overflow-auto pt-6 px-4 pb-6 font-mono text-sm border-l-2 bg-gray-50 mt-8 mb-8;
+  }
+  & code {
+    @apply font-mono text-sm bg-gray-50 p-1;
+  }
+  & a {
+    @apply underline;
+    text-decoration-color: #ccc;
   }
 }
 
