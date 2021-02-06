@@ -10,13 +10,15 @@ tags:
 
 import styles from "./k8s-dapr-azure-identity-part-ii.module.css";
 
-## Building a Web Front End and Ingress
+This post will step through building a simple, front end web application, deploying it to the Kubernetes cluster, then exposing it to the outside world via a Kubernetes Ingress.
 
-The first step is to build a simple web application and then create a path for a client (a web browser) to access this application. The source for this post is from the [`building-frontend-app`](https://github.com/dfbaskin/azure-and-dapr-identity-example/tree/building-frontend-app) branch in the repo.
+The source related to this post is contained in the [`building-frontend-app`](https://github.com/dfbaskin/azure-and-dapr-identity-example/tree/building-frontend-app) branch of the repo.
 
-I’m using [React](https://reactjs.org/), starting with [create-react-app](https://create-react-app.dev/) using the [Typescript template](https://create-react-app.dev/docs/adding-typescript). I am also using [react-router](https://reactrouter.com/web/guides/quick-start) to provide routes for navigation within the application.
+## Building a Web Front End
 
-Because I want to use access the application using `https://`, I've added additional configuration to the `packages/browser-frontend/.env` file that incorporates the certificates that were created previously.
+To create the initial web application, we use [React](https://reactjs.org/), starting with [create-react-app](https://create-react-app.dev/) using the [Typescript template](https://create-react-app.dev/docs/adding-typescript). We will also use [react-router](https://reactrouter.com/web/guides/quick-start) to provide routes for navigation within the application.
+
+We can use the `https://` protocol, even running the web application in "dev" mode, by adding some additional configuration to the `packages/browser-frontend/.env` file that brings in the certificates that we created previously.
 
 ```
 BROWSER=none
@@ -25,23 +27,25 @@ SSL_CRT_FILE=../../certs/testing-local.crt
 SSL_KEY_FILE=../../certs/testing-local.key
 ```
 
-Doing so, allows me to run the web application locally (using `npm start`) at the address:
+We can run the web application locally (using `npm start`) and then navigate to the address:
 
 [`https://testing.local:3000/`](https://testing.local:3000/)
 
-If the certificate was not set up correctly, the browser will complain about it being invalid or uknown.
+This gives us the additional benefit where changes to the code are automatically refreshed in the browser.
 
 ## Building the Front End Container Image
 
-The next step is to build a container image (using Docker) that will be deployed to the Kubernetes cluster. Running the command:
+The next step is to build a [container image](https://kubernetes.io/docs/concepts/containers/images/) (using Docker) that will be deployed to the Kubernetes cluster.
+
+We can build the web application assets by running the command:
 
 ```
 npm run build
 ```
 
-builds the React application into a set of static set of files (including `index.html`, JavaScript, CSS, and other files). These files need to be served to the client (a browser). A popular mechanism is to use the open-source [NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) package.
+This builds the React application into a set of static files (including `index.html`, JavaScript, CSS, and other files). These files will be served to a client (a browser). A popular mechanism to do this is using the open-source [NGINX](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) package.
 
-The `packages/browser-frontend/Dockerfile` describes the container using a pre-existing NGINX image where the web application build files as well as a `nginx.conf` configuration file are copied into it.
+The `packages/browser-frontend/Dockerfile` describes the container to build using a pre-existing NGINX image. It also describes copying the web assets from the build and an `nginx.conf` configuration file to the image.
 
 ```
 FROM nginx:latest
@@ -49,7 +53,7 @@ COPY ./deploy/frontend-nginx.conf /etc/nginx/nginx.conf
 COPY ./build/ /var/www/site/
 ```
 
-In the web application, there are two routes, one to the root (`/`) and one to an "About" page (`/about`). When serving content for a SPA web site, the server needs to recognize that the About page really comes from the default `index.html` content. There is no content to load if the user refreshes the page on the `/about` route. So the `packages/browser-frontend/deploy/frontend-nginx.conf` handles sending the correct content.
+In the web application, two routes are included, one to the root (`/`) and one to an "About" page (`/about`). When serving content for a SPA web site, the server needs to recognize that the "About" page really comes from the default `/index.html` file (not from an `/about.html` or `/about/index.html` file). So the NGINX configuration, specified in `packages/browser-frontend/deploy/frontend-nginx.conf`, includes definitions to map routes back to the correct content.
 
 ```
 http {
@@ -78,7 +82,7 @@ http {
 }
 ```
 
-The following script can be used to build the static web site and the container image:
+Use this script to build the static web site and the container image:
 
 `packages/browser-frontend/deploy/build-frontend-image.ps1`
 
@@ -121,7 +125,7 @@ spec:
       targetPort: 80
 ```
 
-The deployment describes the state of the [pod](https://kubernetes.io/docs/concepts/workloads/pods/) including the image that was built as described above. The service then exposes the deployment as a network service.
+The deployment describes the state of the [pod](https://kubernetes.io/docs/concepts/workloads/pods/) including the container image to be used. The service then exposes the deployment as a network service within the cluster.
 
 The following scripts can be used to initialize these components:
 
@@ -133,27 +137,23 @@ We can now verify that the front end application is running with a few commands:
 
 ```
 > kubectl get deployment -n azure-dapr-identity-example
-
 NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
 frontend-deployment   1/1     1            1           62s
 
 > kubectl get service -n azure-dapr-identity-example
-
 NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
 frontend-service   ClusterIP   10.103.234.151   <none>        80/TCP    81s
 
 > kubectl get pod -n azure-dapr-identity-example
-
 NAME                                   READY   STATUS    RESTARTS   AGE
 frontend-deployment-68dbc6f5dd-2qj82   1/1     Running   0          4m5s
 
 > kubectl port-forward service/frontend-service 32001:http -n azure-dapr-identity-example
-
 Forwarding from 127.0.0.1:32001 -> 80
 Forwarding from [::1]:32001 -> 80
 ```
 
-The last command temporarily forwards requests from your local machine on port 32001 to the `http` port (port 80) of the `frontend-service` (press `Ctrl`+`C` to stop it). Navigate in a browser to [http://localhost:32001/](http://localhost:32001/) and you should see the web application.
+The last command temporarily forwards requests from your local machine on port 32001 to the `http` (80) port of the `frontend-service` (press `Ctrl`+`C` to stop it). Navigate in a browser to [http://localhost:32001/](http://localhost:32001/) and you should see the web application.
 
 <div className={styles.browserPage}>
 
@@ -161,7 +161,7 @@ The last command temporarily forwards requests from your local machine on port 3
 
 </div>
 
-(The application doesn't do anything interesting, yet.)
+The application doesn't do anything interesting, yet, but you can navigate to the two routes. Refreshing the page returns the correct content as well.
 
 ## The NGINX Ingress Controller
 
@@ -197,7 +197,7 @@ packages/nginx-ingress/initialize-nginx-ingress.ps1
 
 to update `$CERT_VALUE` and `$KEY_VALUE` properties with a base-64 encoded version of the certificate and private keys we created previously and then apply the chart to the Kubernetes cluster.
 
-Finally, we create use the Ingress definition to map requests coming into the Ingress Controller to the front end application:
+Finally, we use the Ingress definition to map requests coming into the Ingress Controller to the front end application:
 
 ```
 apiVersion: networking.k8s.io/v1
@@ -223,9 +223,9 @@ spec:
                   number: 80
 ```
 
-The `frontend-service` exposes the static web site within the Kubernetes cluster and the ingress defintion routes calls that match the `testing.local` domain and matching paths. In our case we are just sending all incoming requests to `frontend-service`. We'll be adding a Web API that will be another destination for routed traffic.
+The `frontend-service` exposes the static web site within the Kubernetes cluster. This ingress defintion routes requests that match the `testing.local` domain and requested paths to the web site service. In our case we are just sending all incoming requests to `frontend-service`. We'll add a Web API later that will be another destination for routed traffic.
 
-This definition will also configure [TLS-termination](https://en.wikipedia.org/wiki/TLS_termination_proxy) for us. An incoming request from outside the cluster will be encrypted, but within the cluster the requests can flow to the service unencrypted (over the `http` protocol). Note that once we incorporate DAPR, this changes, however, which we will discuss later.
+This definition will also configure [TLS-termination](https://en.wikipedia.org/wiki/TLS_termination_proxy) for us. An incoming request from outside the cluster will be encrypted, but within the cluster the requests can flow to the service unencrypted (over the `http` protocol). We will discuss later how this changes once we incorporate DAPR services.
 
 This ingress definition can be applied using the command:
 
