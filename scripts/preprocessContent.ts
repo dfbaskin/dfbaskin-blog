@@ -37,6 +37,9 @@ function isMarkdownItem(
 ): item is MarkdownItemDetails {
   return (item as MarkdownItemDetails).frontmatter !== undefined;
 }
+function isStyleItem(item: ItemFileDetails) {
+  return item.file.extension === ".css";
+}
 
 const fileStream = of(null).pipe(
   mergeMap(() => readdirRecursive(contentPath)),
@@ -89,7 +92,7 @@ const catalogStream = fileStream.pipe(
 );
 
 const imageStream = fileStream.pipe(
-  filter((item) => !isMarkdownItem(item)),
+  filter((item) => !isMarkdownItem(item) && !isStyleItem(item)),
   mergeMap((item) => {
     const {
       file: { rootPath, relativePath },
@@ -100,11 +103,23 @@ const imageStream = fileStream.pipe(
   })
 );
 
+const stylesStream = fileStream.pipe(
+  filter((item) => !isMarkdownItem(item) && isStyleItem(item)),
+  mergeMap((item) => {
+    const {
+      file: { rootPath, relativePath },
+    } = item;
+    const sourceFile = join(rootPath, relativePath);
+    const destFile = join(postsPagesPath, basename(relativePath));
+    return copyFile(sourceFile, destFile);
+  })
+);
+
 const initializationStream = of(null).pipe(mergeMap(() => createBuildPaths()));
 
 concat(
   initializationStream,
-  merge(fileStream, catalogStream, imageStream)
+  merge(fileStream, catalogStream, imageStream, stylesStream)
 ).subscribe({
   error(err) {
     console.error(err);

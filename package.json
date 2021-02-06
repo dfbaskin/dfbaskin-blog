@@ -52,7 +52,7 @@
     }
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3500",
     "build": "npm run preprocess && next build && next export -o wwwroot",
     "start": "next start",
     "preprocess": "ts-node --project scripts/tsconfig.json scripts/preprocessContent.ts",
