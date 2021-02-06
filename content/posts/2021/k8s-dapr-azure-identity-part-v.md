@@ -9,3 +9,5 @@ tags:
 ---
 
 ## Incorporating DAPR
+
+a bit because it is capable of automating service discovery and ensuring that requests between services are encrypted and come from the expected source.)

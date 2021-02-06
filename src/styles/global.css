@@ -57,6 +57,9 @@ html {
     @apply underline;
     text-decoration-color: #ccc;
   }
+  & blockquote {
+    @apply mb-4 mt-4 ml-8 pl-4 bg-gray-50 border-l-2;
+  }
 }
 
 @tailwind utilities;

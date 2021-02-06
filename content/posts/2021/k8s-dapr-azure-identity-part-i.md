@@ -18,7 +18,7 @@ This example was built on my Windows 10 development machine, but should also wor
 
 - [Docker and Kubernetes](https://www.docker.com/products/docker-desktop) - Docker is used only to build the container images for deployment into Kubernetes. The application itself is run in Kubernetes.
 
-- [Helm](https://helm.sh/docs/) - To install the [nginx Ingress controller](https://github.com/nginxinc/kubernetes-ingress).
+- [Helm](https://helm.sh/docs/) - To install the [NGINX Ingress controller](https://github.com/nginxinc/kubernetes-ingress).
 
 - [Powershell](https://docs.microsoft.com/en-us/powershell/) - Scripts included in the example are written in Powershell, which is available cross platform. The scripts, however, are all fairly simple and could easily be migrated to the scripting language of your choice if so desired.
 
