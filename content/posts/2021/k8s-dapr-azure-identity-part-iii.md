@@ -43,7 +43,7 @@ export function fetchAuthConfig(): Promise<AuthConfig> {
 
 - Ensure that the Microsoft Graph `User.Read` API permission is enabled.
 
-![Redirects](./images/authentication-permissions.png)
+![Permissions](./images/authentication-permissions.png)
 
 ## User Authentication
 
