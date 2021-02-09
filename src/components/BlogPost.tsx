@@ -13,7 +13,7 @@ interface Props {
 export function BlogPost({ meta, children }: Props) {
   const localizedDate = dateFormat.format(Date.parse(meta.date));
   return (
-    <Layout>
+    <Layout title={meta.title}>
       <div className={styles.blogPost}>
         <header>
           <h1>{meta.title}</h1>
