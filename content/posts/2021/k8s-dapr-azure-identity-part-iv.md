@@ -14,9 +14,9 @@ We will be using [.NET Core v5](https://docs.microsoft.com/en-us/dotnet/core/dot
 
 The source related to this post is contained in the [`adding-users-api`](https://github.com/dfbaskin/azure-and-dapr-identity-example/tree/adding-users-api) branch of the repo.
 
-## Adding a Users API
+## Adding an API Scope
 
-To protect our API, we'll need a scope that is related to our application and the services that exposes. Details about this are included in these links:
+To protect our API, we'll need a scope that is related to our application and the services that it exposes. Details about this are included in these links:
 
 - [Protected Web API Registration](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-protected-web-api-app-registration) - details about exposing delegated permissions (i.e. scopes) for our API.
 
@@ -24,11 +24,11 @@ To protect our API, we'll need a scope that is related to our application and th
 
 - [Protecting Web API .NET Core](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-v2-aspnet-core-web-api) - details about features available in .NET core that can be used to protect a web API.
 
-We will also need some additional setup to allow the Web API to call the Microsoft Graph "Me" service on behalf of the authenticated user. Additional details about configuring on-behalf-of flow are included in these links:
+We will also need some additional setup to allow the Web API to call the Microsoft Graph "Me" method on behalf of the authenticated user. Additional details about configuring on-behalf-of flow are included in these links:
 
 - [On-Behalf-Of Flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow) - details about the on-behalf-of flow.
 
-- [.NET Core On-Behalf-Of](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-web-app-call-api-app-configuration?tabs=aspnetcore) - details about features available in .NET core that can be used to make web API calls on behalf of the authenticated user.
+- [.NET Core On-Behalf-Of](https://docs.microsoft.com/en-us/azure/active-directory/develop/scenario-web-app-call-api-app-configuration?tabs=aspnetcore) - details about features available in .NET Core that can be used to make web API calls on behalf of the authenticated user.
 
 - [Adding a Client Secret](https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-client-secret) - details about creating a client secret that will be used in the on-behalf-of flow.
 
@@ -131,7 +131,7 @@ services
     .AddInMemoryTokenCaches();
 ```
 
-The `user.read` permission has delegated access so the web API can request access on behalf of the user. The middleware handles the on-behalf-of flow behind the scenes, providing the access token which the endpoint can retreive in order to call the Microsoft Graph API.
+The `user.read` permission has delegated access so the web API can request access on behalf of the user. The middleware handles the on-behalf-of flow behind the scenes and provides an access token that is used when calling the Microsoft Graph API.
 
 ```
 private static readonly string[] requiredScopes = new string[] { "access_as_user" };
@@ -182,13 +182,13 @@ Then run two commands:
 - `npm start` (in the `packages/browser-frontend` path)
 - `dotnet start` (in the `packages/users-api` path)
 
-If you then navigate to [https://testing.local:3000/](https://testing.local:3000/), you should be able to sign into the application and test the API calls to verify everything is working.
+Navigate to [https://testing.local:3000/](https://testing.local:3000/) and sign into the application and test the API calls to verify everything is working.
 
-> _It's worth mentioning here that if you are running on a Windows 10 box, I highly recommend using [Microsoft Terminal](https://github.com/microsoft/terminal) for your command-line work. You can even script it to [open multiple tabs in different directories and run commands](https://gist.github.com/dfbaskin/033f8c81582fd310a428e302a60dca7c)._
+> _It's worth mentioning here that if you are running on a Windows 10 box, I highly recommend using [Microsoft Terminal](https://github.com/microsoft/terminal) for your command-line work. You can even script it to [open multiple tabs in different directories, each running its own command](https://gist.github.com/dfbaskin/033f8c81582fd310a428e302a60dca7c)._
 
 ## Building the Users API Container Image
 
-Like we did for static web assets, we need to build another image for the users API. The `Dockerfile` that describes this image uses a .NET v5 runtime image where the artifacts of the users API build will be copied. The `ENTRYPOINT` then specifies how the web API server is started.
+Like we did for the static web assets, we need to build another image for the users API. The `Dockerfile` that describes this image uses a .NET v5 runtime image where the artifacts of the users API build will be copied. The `ENTRYPOINT` then specifies how the web API server is started.
 
 ```
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
@@ -207,7 +207,7 @@ This script builds the application then runs `docker build` to build the contain
 
 ## Updating the Ingress
 
-Before adding the image to the Kubernetes cluster, we need to update the ingress definition so that incoming requests are routed to both the NGINX server for the static web assets and the new Users API web server.
+Before adding the new image to the Kubernetes cluster, we need to update the ingress definitions so that incoming requests are routed to both the NGINX server for the static web assets and the new Users API web server.
 
 We could add an additional path to our Ingress definition we created previously. But then we have a single definition that must always change as new services are added.
 
@@ -282,7 +282,7 @@ spec:
 
 The users API gets all requests starting with the path `/api` and the front end (NGINX) application gets everything else. To the front end application, this ingress definition makes it appear to be a single web site even though it is running separate services within the cluster. So there is no [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) configuration required either.
 
-Of course, the front end application could access other web APIs outside of this system (as it does querying the Microsoft Graph API). So it is not a requirement to configure your application this way.
+Of course, the front end application could access other web APIs outside of this system (as it does querying the Microsoft Graph API, for example). So it is not a requirement to configure your application this way.
 
 In the next post we will show how DAPR can provide an abstraction around these endpoints so that we do not have to declare the routing explicitly.
 
@@ -308,6 +308,6 @@ And finally the ingress (from the `packages/nginx-ingress` path):
 kubectl apply -f ingress-master.yaml -n azure-dapr-identity-example
 ```
 
-Then navigate to [https://testing.local:31001/](https://testing.local:31001/) to access the application within the Kubernetes cluster.
+Navigate to [https://testing.local:31001/](https://testing.local:31001/) to access the application within the Kubernetes cluster.
 
-Next up, we will incorporate DAPR into our application.
+Next up, we will incorporate the DAPR runtime into our application.
