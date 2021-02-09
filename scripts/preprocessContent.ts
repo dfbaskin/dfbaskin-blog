@@ -4,7 +4,7 @@ import fs from "fs";
 import { join, resolve, relative, extname, basename } from "path";
 import matter from "gray-matter";
 import { of, from, pipe, concat, merge, Observable, EMPTY } from "rxjs";
-import { mergeMap, map, reduce, filter, share } from "rxjs/operators";
+import { mergeMap, map, reduce, filter, share, tap } from "rxjs/operators";
 import {
   contentPath,
   postsPagesPath,
@@ -48,15 +48,27 @@ function isStyleItem(item: ItemFileDetails) {
   return item.file.extension === ".css";
 }
 
+function relativePathToItem(relativePath: string) {
+  const extension = extname(relativePath).toLowerCase();
+  const item: ItemFileDetails = {
+    file: {
+      rootPath: contentPath,
+      relativePath,
+      extension,
+    },
+  };
+  return item;
+}
+
 const distinctUntilChangedOrTimeout = () => {
   const timeout = 1000;
   let lastValue: string | undefined;
   let lastTime: number = 0;
+  const timedOut = () => Date.now() - lastTime > timeout;
   return (source: Observable<string>) => {
     return source.pipe(
       mergeMap((value) => {
-        const timedOut = Date.now() - lastTime > timeout;
-        if (!lastValue || value !== lastValue || timedOut) {
+        if (!lastValue || value !== lastValue || timedOut()) {
           lastValue = value;
           lastTime = Date.now();
           return of(value);
@@ -67,28 +79,21 @@ const distinctUntilChangedOrTimeout = () => {
   };
 };
 
+const loadMarkdownForItem = () => (source: Observable<ItemFileDetails>) => {
+  return source.pipe(
+    mergeMap((item) => {
+      if (item.file.extension === ".md") {
+        return of(item).pipe(loadMarkdownContent());
+      }
+      return of(item);
+    })
+  );
+};
+
 const initialFileStream = of(null).pipe(
   mergeMap(() => readdirRecursive(contentPath)),
-  mergeMap((items) => {
-    const list = items.map((relativePath) => {
-      const extension = extname(relativePath).toLowerCase();
-      const item: ItemFileDetails = {
-        file: {
-          rootPath: contentPath,
-          relativePath,
-          extension,
-        },
-      };
-      return item;
-    });
-    return from(list);
-  }),
-  mergeMap((item) => {
-    if (item.file.extension === ".md") {
-      return of(item).pipe(loadMarkdownContent());
-    }
-    return of(item);
-  }),
+  mergeMap((items) => from(items.map(relativePathToItem))),
+  loadMarkdownForItem(),
   share()
 );
 
@@ -108,24 +113,11 @@ const watchFileStream = new Observable<string>((subscriber) => {
   });
 }).pipe(
   distinctUntilChangedOrTimeout(),
-  map((relativePath) => {
+  tap((relativePath) => {
     console.log(`  - ${relativePath}`);
-    const extension = extname(relativePath).toLowerCase();
-    const item: ItemFileDetails = {
-      file: {
-        rootPath: contentPath,
-        relativePath,
-        extension,
-      },
-    };
-    return item;
   }),
-  mergeMap((item) => {
-    if (item.file.extension === ".md") {
-      return of(item).pipe(loadMarkdownContent());
-    }
-    return of(item);
-  }),
+  map(relativePathToItem),
+  loadMarkdownForItem(),
   share()
 );
 
