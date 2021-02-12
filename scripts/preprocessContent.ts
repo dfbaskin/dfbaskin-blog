@@ -3,14 +3,21 @@ import mkdirp from "mkdirp";
 import fs from "fs";
 import { join, resolve, relative, extname, basename } from "path";
 import matter from "gray-matter";
-import { of, from, pipe, concat, merge } from "rxjs";
-import { mergeMap, map, reduce, filter } from "rxjs/operators";
+import { of, from, pipe, concat, merge, Observable, EMPTY } from "rxjs";
+import { mergeMap, map, reduce, filter, share, tap } from "rxjs/operators";
 import {
   contentPath,
   postsPagesPath,
   imagesPath,
   catalogPath,
 } from "./buildInfo";
+
+const watchMode = process.argv.slice(2).reduce((wm, arg) => {
+  if (!wm) {
+    wm = arg === "-w" || arg === "--watch";
+  }
+  return wm;
+}, false);
 
 const readdir = promisify(fs.readdir);
 const readFile = promisify(fs.readFile);
@@ -37,30 +44,84 @@ function isMarkdownItem(
 ): item is MarkdownItemDetails {
   return (item as MarkdownItemDetails).frontmatter !== undefined;
 }
+function isStyleItem(item: ItemFileDetails) {
+  return item.file.extension === ".css";
+}
 
-const fileStream = of(null).pipe(
+function relativePathToItem(relativePath: string) {
+  const extension = extname(relativePath).toLowerCase();
+  const item: ItemFileDetails = {
+    file: {
+      rootPath: contentPath,
+      relativePath,
+      extension,
+    },
+  };
+  return item;
+}
+
+const distinctUntilChangedOrTimeout = () => {
+  const timeout = 1000;
+  let lastValue: string | undefined;
+  let lastTime: number = 0;
+  const timedOut = () => Date.now() - lastTime > timeout;
+  return (source: Observable<string>) => {
+    return source.pipe(
+      mergeMap((value) => {
+        if (!lastValue || value !== lastValue || timedOut()) {
+          lastValue = value;
+          lastTime = Date.now();
+          return of(value);
+        }
+        return EMPTY;
+      })
+    );
+  };
+};
+
+const loadMarkdownForItem = () => (source: Observable<ItemFileDetails>) => {
+  return source.pipe(
+    mergeMap((item) => {
+      if (item.file.extension === ".md") {
+        return of(item).pipe(loadMarkdownContent());
+      }
+      return of(item);
+    })
+  );
+};
+
+const initialFileStream = of(null).pipe(
   mergeMap(() => readdirRecursive(contentPath)),
-  mergeMap((items) => {
-    const list = items.map((relativePath) => {
-      const extension = extname(relativePath).toLowerCase();
-      const item: ItemFileDetails = {
-        file: {
-          rootPath: contentPath,
-          relativePath,
-          extension,
-        },
-      };
-      return item;
-    });
-    return from(list);
-  }),
-  mergeMap((item) => {
-    if (item.file.extension === ".md") {
-      return of(item).pipe(loadMarkdownContent());
-    }
-    return of(item);
-  })
+  mergeMap((items) => from(items.map(relativePathToItem))),
+  loadMarkdownForItem(),
+  share()
 );
+
+const watchFileStream = new Observable<string>((subscriber) => {
+  if (!watchMode) {
+    subscriber.complete();
+    return;
+  }
+  console.log("Watching for file changes ...");
+  const options = {
+    recursive: true,
+  };
+  fs.watch(contentPath, options, (eventType, filename) => {
+    if (eventType === "change" && filename) {
+      subscriber.next(filename);
+    }
+  });
+}).pipe(
+  distinctUntilChangedOrTimeout(),
+  tap((relativePath) => {
+    console.log(`  - ${relativePath}`);
+  }),
+  map(relativePathToItem),
+  loadMarkdownForItem(),
+  share()
+);
+
+const fileStream = concat(initialFileStream, watchFileStream);
 
 const catalogStream = fileStream.pipe(
   filter((item) => isMarkdownItem(item)),
@@ -89,7 +150,7 @@ const catalogStream = fileStream.pipe(
 );
 
 const imageStream = fileStream.pipe(
-  filter((item) => !isMarkdownItem(item)),
+  filter((item) => !isMarkdownItem(item) && !isStyleItem(item)),
   mergeMap((item) => {
     const {
       file: { rootPath, relativePath },
@@ -100,11 +161,23 @@ const imageStream = fileStream.pipe(
   })
 );
 
+const stylesStream = fileStream.pipe(
+  filter((item) => !isMarkdownItem(item) && isStyleItem(item)),
+  mergeMap((item) => {
+    const {
+      file: { rootPath, relativePath },
+    } = item;
+    const sourceFile = join(rootPath, relativePath);
+    const destFile = join(postsPagesPath, basename(relativePath));
+    return copyFile(sourceFile, destFile);
+  })
+);
+
 const initializationStream = of(null).pipe(mergeMap(() => createBuildPaths()));
 
 concat(
   initializationStream,
-  merge(fileStream, catalogStream, imageStream)
+  merge(fileStream, catalogStream, imageStream, stylesStream)
 ).subscribe({
   error(err) {
     console.error(err);
