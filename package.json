@@ -1,57 +1,19 @@
 {
-  "name": "dfbaskin-blog",
-  "private": true,
-  "description": "Blog for Dave F. Baskin",
-  "version": "0.1.0",
-  "author": "Dave Baskin <dfbaskin@gmail.com>",
-  "bugs": {
-    "url": "https://github.com/dfbaskin/dfbaskin-blog/issues"
+  "name": "astro-dfb",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@fontsource/crimson-pro": "^4.0.0",
-    "@fontsource/roboto-mono": "^4.0.0",
-    "@mdx-js/loader": "^1.6.22",
-    "@next/mdx": "^10.0.4",
-    "autoprefixer": "^10.1.0",
-    "gray-matter": "^4.0.2",
-    "next": "^10.0.4",
-    "postcss-nesting": "^8.0.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "rxjs": "^6.6.3",
-    "tailwindcss": "^2.0.2"
-  },
-  "devDependencies": {
-    "@types/mkdirp": "^1.0.1",
-    "@types/node": "^14.14.16",
-    "@types/react": "^17.0.0",
-    "@types/rimraf": "^3.0.0",
-    "husky": "^6.0.0",
-    "mkdirp": "^1.0.4",
-    "prettier": "^2.3.0",
-    "pretty-quick": "^3.1.0",
-    "rimraf": "^3.0.2",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.1.3"
-  },
-  "homepage": "https://github.com/dfbaskin/dfbaskin-blog#readme",
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "not IE_Mob 11",
-    "maintained node versions"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dfbaskin/dfbaskin-blog.git"
-  },
-  "scripts": {
-    "dev": "next dev -p 3500",
-    "build": "npm run preprocess && next build && next export -o wwwroot",
-    "start": "next start",
-    "preprocess": "ts-node --project scripts/tsconfig.json scripts/preprocessContent.ts",
-    "clean": "ts-node --project scripts/tsconfig.json scripts/cleanPreprocessContent.ts",
-    "prepare": "husky install"
+    "@astrojs/mdx": "^1.1.1",
+    "@astrojs/rss": "^3.0.0",
+    "@astrojs/sitemap": "^3.0.1",
+    "@fontsource-variable/open-sans": "^5.0.15",
+    "astro": "^3.2.3"
   }
 }

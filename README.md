@@ -4,7 +4,7 @@
 
 The source code for the blog from Dave Baskin (a.k.a., Web, Windows, and Whatnot).
 
-Built with [Nextjs](https://nextjs.org/).
+Built with [Astro](https://docs.astro.build).
 
 # Licenses
 
