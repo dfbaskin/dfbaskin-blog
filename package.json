@@ -1,5 +1,5 @@
 {
-  "name": "astro-dfb",
+  "name": "dfbaskin-blog",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -7,13 +7,19 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "pages:dev": "wrangler pages dev --compatibility-date=2023-10-09 -- astro dev",
+    "pages:deploy": "astro build && wrangler pages deploy ./dist"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^7.5.1",
     "@astrojs/mdx": "^1.1.1",
     "@astrojs/rss": "^3.0.0",
     "@astrojs/sitemap": "^3.0.1",
     "@fontsource-variable/open-sans": "^5.0.15",
     "astro": "^3.2.3"
+  },
+  "devDependencies": {
+    "wrangler": "^3.11.0"
   }
 }
