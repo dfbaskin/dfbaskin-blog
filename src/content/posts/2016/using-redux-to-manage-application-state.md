@@ -273,10 +273,7 @@ class.
 export function provideAppStore() {
   return new Provider(AppStore, {
     useFactory: (reducers) => {
-      let combinedReducers = reducers.reduce(
-        (combined, reducer) => Object.assign(combined, reducer),
-        {}
-      );
+      let combinedReducers = reducers.reduce((combined, reducer) => Object.assign(combined, reducer), {});
       AppStore.instance = new AppStore(combineReducers(combinedReducers));
       return AppStore.instance;
     },
@@ -364,9 +361,7 @@ defineProperty(targetPrototype, onInitName, {
       if (ngOnInitOriginal) {
         ngOnInitOriginal.bind(this)();
       }
-      let subscription = onInitAppStoreSubscription.bind(this)(
-        AppStore.instance.source
-      );
+      let subscription = onInitAppStoreSubscription.bind(this)(AppStore.instance.source);
       if (!Array.isArray(subscription)) {
         subscription = [subscription];
       }
@@ -403,5 +398,5 @@ defineProperty(targetPrototype, onDestroyName, {
 
 Hopefully this has shown you the benefits of using Redux to manage your application state and build more robust web
 applications. Even though Redux was built upon ideas around Flux implementations, it quickly became popular due to its
-simplicity. The ideas behind Redux have been implemented in other libraries as well (such as [ngrx](https://github
-.com/ngrx/store)).
+simplicity. The ideas behind Redux have been implemented in other libraries as well (such as
+[ngrx](https://github.com/ngrx/store)).

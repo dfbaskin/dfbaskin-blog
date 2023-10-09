@@ -105,14 +105,7 @@ This `ImageDetailList` component uses the `ImageDetailTable` component as a chil
 declared using HTML markup.
 
 ```html
-<image-detail-table
-  [tableData]="imageList"
-  [sortBy]="sortBy"
-  [isAscending]="isAscending"
-  (toggleTitleSort)="sortByTitle()"
-  (toggleSizeSort)="sortBySize()"
-  (toggleDateSort)="sortByDate()"
-></image-detail-table>
+<image-detail-table [tableData]="imageList" [sortBy]="sortBy" [isAscending]="isAscending" (toggleTitleSort)="sortByTitle()" (toggleSizeSort)="sortBySize()" (toggleDateSort)="sortByDate()"></image-detail-table>
 ```
 
 This may be like no HTML markup you've ever seen, but it is valid markup. The documentation
@@ -217,27 +210,9 @@ current sort state of the column and binds the the `toggleSort` event for the co
 application three of the columns can be sorted.
 
 ```html
-<th
-  class="sortable-column-header"
-  [sortIndicator]="titleSortIndicator"
-  (toggleSort)="sortByTitle()"
->
-  Title
-</th>
-<th
-  class="sortable-column-header"
-  [sortIndicator]="sizeSortIndicator"
-  (toggleSort)="sortBySize()"
->
-  Size (bytes)
-</th>
-<th
-  class="sortable-column-header"
-  [sortIndicator]="dateSortIndicator"
-  (toggleSort)="sortByDate()"
->
-  Taken
-</th>
+<th class="sortable-column-header" [sortIndicator]="titleSortIndicator" (toggleSort)="sortByTitle()">Title</th>
+<th class="sortable-column-header" [sortIndicator]="sizeSortIndicator" (toggleSort)="sortBySize()">Size (bytes)</th>
+<th class="sortable-column-header" [sortIndicator]="dateSortIndicator" (toggleSort)="sortByDate()">Taken</th>
 ```
 
 The `ImageDetailTable` then translates the toggle sort events into its own specific events.
@@ -338,12 +313,7 @@ images in the collection.
 
 ```html
 <label>
-  <input
-    #tagInput
-    type="checkbox"
-    [ngModel]="tag.isSelected"
-    (ngModelChange)="toggleSelectedTag(tag.tag, tagInput.checked)"
-  />
+  <input #tagInput type="checkbox" [ngModel]="tag.isSelected" (ngModelChange)="toggleSelectedTag(tag.tag, tagInput.checked)" />
   {{tag.tag}}
 </label>
 ```
