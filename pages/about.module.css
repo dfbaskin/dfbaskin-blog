@@ -1,8 +1,0 @@
-.aboutPage {
-  & h2 {
-    @apply text-2xl mb-12;
-  }
-  & a > img {
-    width: 20rem;
-  }
-}
