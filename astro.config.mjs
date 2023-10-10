@@ -9,4 +9,9 @@ export default defineConfig({
   integrations: [mdx(), sitemap()],
   output: "server",
   adapter: cloudflare(),
+  image: {
+    service: {
+      entrypoint: "./src/services/passThroughImageService",
+    },
+  },
 });
