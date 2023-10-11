@@ -10,6 +10,13 @@ export default defineConfig({
   output: "server",
   adapter: cloudflare(),
   image: {
-    service: passthroughImageService(),
+    service: {
+      entrypoint: "./src/services/passThroughImageService",
+    },
   },
+  // vite: {
+  //   build: {
+  //     minify: false,
+  //   },
+  // },
 });
