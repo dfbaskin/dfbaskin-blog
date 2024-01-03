@@ -15,9 +15,9 @@
     "@astrojs/cloudflare": "^7.5.1",
     "@astrojs/mdx": "^1.1.1",
     "@astrojs/rss": "^3.0.0",
-    "@astrojs/sitemap": "^3.0.1",
+    "@astrojs/sitemap": "^3.0.4",
     "@fontsource-variable/open-sans": "^5.0.15",
-    "astro": "^3.2.3"
+    "astro": "^3.6.4"
   },
   "devDependencies": {
     "prettier": "^3.0.3",
