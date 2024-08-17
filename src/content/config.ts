@@ -1,4 +1,5 @@
 import { defineCollection, z } from "astro:content";
+import type { ImageMetadata } from "astro";
 
 const posts = defineCollection({
   // Type-check frontmatter using a schema
@@ -8,7 +9,7 @@ const posts = defineCollection({
     // Transform string to Date object
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    heroImage: z.string().optional().default("/posts-default-image.jpg"),
+    heroImage: z.custom<ImageMetadata>().optional(),
   }),
 });
 

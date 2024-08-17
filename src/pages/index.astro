@@ -3,8 +3,10 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import FormattedDate from "../components/FormattedDate.astro";
+import defaultImage from "./assets/posts-default-image.jpg";
 
 const cutoffDate = new Date("2021-01-01");
 const posts = (await getCollection("posts"))
@@ -38,7 +40,7 @@ const posts = (await getCollection("posts"))
       ul li a {
         display: flex;
         gap: 2rem;
-				text-align: center;
+        text-align: center;
       }
       ul li a img {
         border-radius: 12px;
@@ -86,11 +88,11 @@ const posts = (await getCollection("posts"))
               <li>
                 <a href={`/posts/${post.slug}/`}>
                   <div>
-                    <img
+                    <Image
                       width={720}
                       height={360}
-                      src={post.data.heroImage}
-                      alt=""
+                      src={post.data.heroImage ?? defaultImage}
+                      alt={post.data.title}
                     />
                   </div>
                   <div>

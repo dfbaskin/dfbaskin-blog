@@ -1,6 +1,7 @@
 ---
-import { type CollectionEntry, getEntry } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import { getEntry } from "astro:content";
+import BlogPost from "../../layouts/BlogPost.astro";
+import defaultImage from "../assets/posts-default-image.jpg";
 
 const { slug } = Astro.params;
 if (slug === undefined) {
@@ -13,10 +14,14 @@ if (entry === undefined) {
   return Astro.redirect("/404");
 }
 
-const { Content } = await entry.render();
+const blogPostData = {
+  ...entry.data,
+  heroImage: entry.data.heroImage ?? defaultImage,
+};
 
+const { Content } = await entry.render();
 ---
 
-<BlogPost {...entry.data}>
-	<Content />
+<BlogPost {...blogPostData}>
+  <Content />
 </BlogPost>
