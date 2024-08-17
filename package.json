@@ -1,7 +1,7 @@
 {
   "name": "dfbaskin-blog",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.1.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -12,16 +12,16 @@
     "pages:deploy": "astro build && wrangler pages deploy ./dist"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^7.5.1",
-    "@astrojs/mdx": "^1.1.1",
-    "@astrojs/rss": "^3.0.0",
-    "@astrojs/sitemap": "^3.0.1",
-    "@fontsource-variable/open-sans": "^5.0.15",
-    "astro": "^3.2.3"
+    "@astrojs/cloudflare": "^11.0.4",
+    "@astrojs/mdx": "^3.1.3",
+    "@astrojs/rss": "^4.0.7",
+    "@astrojs/sitemap": "^3.1.6",
+    "@fontsource-variable/open-sans": "^5.0.29",
+    "astro": "^4.14.2"
   },
   "devDependencies": {
-    "prettier": "^3.0.3",
-    "prettier-plugin-astro": "^0.12.0",
-    "wrangler": "^3.22.1"
+    "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "wrangler": "^3.72.0"
   }
 }
